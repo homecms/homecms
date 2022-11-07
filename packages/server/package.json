@@ -1,0 +1,22 @@
+{
+  "name": "@indieweb-cms/server",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The server component of indieweb-cms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rowanmanning/indieweb-cms.git",
+    "directory": "packages/server"
+  },
+  "homepage": "https://github.com/rowanmanning/indieweb-cms/tree/main/packages/server",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x"
+  },
+  "main": "lib",
+  "dependencies": {
+    "@indieweb-cms/logger": "^0.0.0",
+    "fastify": "^4.9.2"
+  }
+}

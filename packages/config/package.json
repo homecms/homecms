@@ -1,0 +1,21 @@
+{
+  "name": "@indieweb-cms/config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A consistent configuration object based on environment variables",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rowanmanning/indieweb-cms.git",
+    "directory": "packages/config"
+  },
+  "homepage": "https://github.com/rowanmanning/indieweb-cms/tree/main/packages/config",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x"
+  },
+  "main": "lib",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}

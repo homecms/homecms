@@ -1,0 +1,14 @@
+{
+	"extends": [
+		"@rowanmanning/eslint-config"
+	],
+	"rules": {
+		"max-len": ["warn", {
+			"code": 100,
+			"ignoreStrings": true,
+			"ignoreTemplateLiterals": true
+		}],
+		"no-return-await": "off",
+		"require-await": "off"
+	}
+}
