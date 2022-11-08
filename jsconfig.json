@@ -15,7 +15,7 @@
 	"exclude": [
 		"coverage",
 		"node_modules",
-		"test"
+		"**/*.test.js"
 	],
 	"include": [
 		"**/*.js"
