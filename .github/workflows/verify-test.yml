@@ -15,10 +15,45 @@ jobs:
     name: Verify code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
       - run: npm install
       - run: npm run verify
+
+  # Run unit tests
+  test-unit:
+    name: Run unit tests
+    needs: verify
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['18']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm install
+      - run: npm run test:coverage
+
+  # Run end-to-end tests
+  test-end-to-end:
+    name: Run end-to-end tests
+    needs: verify
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['18']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run test:end-to-end
