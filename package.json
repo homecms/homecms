@@ -28,16 +28,20 @@
     "verify": "npm run verify:eslint && npm run verify:types",
     "verify:eslint": "eslint .",
     "verify:types": "tsc --noEmit --project ./jsconfig.json",
+    "test": "npm run test:end-to-end",
+    "test:end-to-end": "playwright test",
     "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@playwright/test": "^1.27.1",
     "@rowanmanning/eslint-config": "^5.0.2",
     "eslint": "^8.27.0",
     "husky": "^8.0.1",
     "nodemon": "^2.0.20",
     "pino-pretty": "^9.1.1",
+    "playwright": "^1.27.1",
     "typescript": "^4.8.4"
   },
   "volta": {

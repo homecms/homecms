@@ -25,7 +25,17 @@ function createServer({environment}) {
 	app.get('/', async (request, reply) => {
 		return reply
 			.type('text/html; charset=utf-8')
-			.send('Hello world!');
+			.send(`
+				<!DOCTYPE html>
+				<html>
+					<head>
+						<title>Hello</title>
+					</head>
+					<body>
+						<p>Hello World!</p>
+					</body>
+				</html>
+			`);
 	});
 
 	return app;
