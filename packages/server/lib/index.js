@@ -1,5 +1,6 @@
 'use strict';
 
+const createDatabaseConnection = require('@indieweb-cms/database');
 const {fastify} = require('fastify');
 const logger = require('@indieweb-cms/logger');
 
@@ -9,7 +10,7 @@ const logger = require('@indieweb-cms/logger');
  * @param {import('@indieweb-cms/config').Config} config - The server configuration.
  * @returns {import('fastify').FastifyInstance} - Returns a new Fastify instance.
  */
-function createServer({environment}) {
+function createServer(config) {
 
 	// Create the app
 	const app = fastify({
@@ -18,11 +19,17 @@ function createServer({environment}) {
 	});
 
 	app.addHook('onReady', async () => {
-		app.log.info(`Server running in ${environment} environment`);
+		app.log.info(`Server running in ${config.environment} environment`);
 	});
+
+	// Create the database connection
+	const db = createDatabaseConnection(config);
 
 	// Declare a route
 	app.get('/', async (request, reply) => {
+		const tableCount = await db('pg_catalog.pg_tables')
+			.select('tablename')
+			.where({schemaname: 'indieweb-cms'});
 		return reply
 			.type('text/html; charset=utf-8')
 			.send(`
@@ -33,6 +40,7 @@ function createServer({environment}) {
 					</head>
 					<body>
 						<p>Hello World!</p>
+						<p>There are ${tableCount.length} database tables.</p>
 					</body>
 				</html>
 			`);
