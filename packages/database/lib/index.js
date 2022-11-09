@@ -10,6 +10,9 @@ const path = require('node:path');
  * @property {import('@indieweb-cms/logger').Logger} logger - The logger to use.
  */
 
+const MIGRATION_DIRECTORY = path.resolve(__dirname, '..', 'migrations');
+const SEED_DATA_DIRECTORY = path.resolve(__dirname, '..', 'seed-data');
+
 /**
  * Class representing a database.
  */
@@ -34,9 +37,17 @@ exports.Database = class Database {
 	 * @private
 	 */
 	baseMigrationConfig = {
-		directory: path.resolve(__dirname, '..', 'migrations'),
+		directory: MIGRATION_DIRECTORY,
 		tableName: 'migrations',
 		stub: path.resolve(__dirname, 'migration-template.js')
+	};
+
+	/**
+	 * @private
+	 */
+	baseSeedDataConfig = {
+		recursive: true,
+		stub: path.resolve(__dirname, 'seed-data-template.js')
 	};
 
 	/**
@@ -128,6 +139,34 @@ exports.Database = class Database {
 			...this.baseMigrationConfig
 		});
 		this.log.info(`Database migration${name ? ` ${name}` : ''} undone`);
+	}
+
+	/**
+	 * Create a new seed data directory.
+	 *
+	 * @param {string} name - The name of the seed data directory.
+	 * @returns {Promise<void>} - Resolves when the seed data has been created.
+	 */
+	async createSeedData(name) {
+		await this.knex.seed.make('index', {
+			directory: path.join(SEED_DATA_DIRECTORY, name),
+			...this.baseSeedDataConfig
+		});
+		this.log.info(`Seed data ${name} created`);
+	}
+
+	/**
+	 * Add a directory of seed data to the database.
+	 *
+	 * @param {string} name - The name of the seed data directory to add.
+	 * @returns {Promise<void>} - Resolves when the seed data has been created.
+	 */
+	async addSeedData(name) {
+		await this.knex.seed.run({
+			directory: path.join(SEED_DATA_DIRECTORY, name),
+			...this.baseSeedDataConfig
+		});
+		this.log.info(`Seed data ${name} created`);
 	}
 
 	/**

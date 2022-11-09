@@ -21,4 +21,10 @@ program
 	.command('migrate:down', 'undo a migration', {
 		executableFile: 'commands/migrate-down'
 	})
+	.command('create:seed', 'create a database seed data', {
+		executableFile: 'commands/create-seed'
+	})
+	.command('seed:add', 'add a directory of seed data to the database', {
+		executableFile: 'commands/seed-add'
+	})
 	.parse(process.argv);

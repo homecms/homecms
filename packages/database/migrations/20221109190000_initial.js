@@ -11,17 +11,14 @@ exports.up = async db => {
 
 		// Define identifying columns
 		table.uuid('id', {primaryKey: true}).defaultTo(db.raw('uuid_generate_v4()'));
-		table.string('slug');
-		table.uuid('parentId');
-
-		// Define the content type column
-		table.enum('type', ['collection', 'page']);
+		table.string('path').notNullable();
+		table.uuid('parentId').nullable().defaultTo(null);
 
 		// Define the actual raw content column
-		table.text('raw');
+		table.text('raw').notNullable().defaultTo('');
 
 		// Define indexes and relationships
-		table.unique(['slug']);
+		table.unique(['path']);
 		table.foreign('parentId').references('content.id');
 	});
 
@@ -30,8 +27,8 @@ exports.up = async db => {
 
 		// Define columns
 		table.uuid('id', {primaryKey: true}).defaultTo(db.raw('uuid_generate_v4()'));
-		table.string('key');
-		table.json('data');
+		table.string('key').notNullable();
+		table.json('data').notNullable();
 
 		// Define indexes and relationships
 		table.unique(['key']);
