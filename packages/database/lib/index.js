@@ -15,6 +15,7 @@ function createDatabaseConnection({databaseURL}) {
 		client: 'pg',
 		connection: databaseURL,
 		searchPath: ['indieweb-cms', 'public'], // TODO do we need this?
+		acquireConnectionTimeout: 30 * 1000, // 30 seconds
 		log: logger,
 
 		// Configure database migrations
