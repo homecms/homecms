@@ -1,7 +1,9 @@
 'use strict';
 
+const {createServer} = require('node:http');
 const {Database} = require('@indieweb-cms/database');
-const {fastify} = require('fastify');
+const express = require('express');
+const {promisify} = require('node:util');
 
 /**
  * @typedef {object} ServerConfig
@@ -17,19 +19,49 @@ const {fastify} = require('fastify');
 exports.Server = class Server {
 
 	/**
-	 * @type {import('fastify').FastifyInstance}
+	 * @type {import('express').Express}
 	 */
-	app;
+	#app;
+
+	/**
+	 * @type {string}
+	 */
+	#baseURL;
+
+	/**
+	 * @type {Database}
+	 */
+	#database;
+
+	/**
+	 * @type {string}
+	 */
+	#environment;
+
+	/**
+	 * @type {import('node:http').Server}
+	 */
+	#httpServer;
+
+	/**
+	 * @type {Function}
+	 */
+	#httpServerClose;
+
+	/**
+	 * @type {Function}
+	 */
+	#httpServerListen;
 
 	/**
 	 * @type {import('@indieweb-cms/logger').Logger}
 	 */
-	log;
+	#log;
 
 	/**
 	 * @type {number}
 	 */
-	port;
+	#port;
 
 	/**
 	 * Server constructor.
@@ -37,52 +69,68 @@ exports.Server = class Server {
 	 * @param {ServerConfig & import('@indieweb-cms/database').DatabaseConfig} config - The server configuration.
 	 */
 	constructor({baseURL, databaseURL, environment, logger, port}) {
-		this.port = port;
-		this.log = logger;
+		this.#baseURL = baseURL;
+		this.#environment = environment;
+		this.#log = logger;
+		this.#port = port;
 
-		this.database = new Database({
+		// Initialise the database
+		this.#database = new Database({
 			databaseURL,
 			logger
 		});
 
-		this.app = fastify({
-			disableRequestLogging: true, // TODO add this ourselves
-			logger
+		// Create the app and server
+		this.#app = express();
+		this.#httpServer = createServer(this.#app);
+		this.#httpServerClose = promisify(this.#httpServer.close.bind(this.#httpServer));
+		this.#httpServerListen = promisify(this.#httpServer.listen.bind(this.#httpServer));
+
+		// Initialise routes
+		this.#initialiseRoutes();
+	}
+
+	/**
+	 * Initialise the app routes.
+	 */
+	#initialiseRoutes() {
+
+		// Declare the main content route
+		this.#app.get(/.*/, async (request, response, next) => {
+
+			// Sanitize the path
+			const path = request.path.toLowerCase();
+
+			// Fetch the content
+			const content = await this.#database.knex('content')
+				.first('*')
+				.where({path});
+
+			// If there's no content, move along
+			if (!content) {
+				return next();
+			}
+
+			// If the content path doesn't match exactly, redirect
+			if (content.path !== request.path) {
+				return response.redirect(content.path);
+			}
+
+			// Output the content
+			response.set('content-type', 'text/html; charset=utf-8');
+			response.send(`
+				<!DOCTYPE html>
+				<html>
+					<head>
+						<title>${content.title}</title>
+					</head>
+					<body>
+						${content.raw}
+					</body>
+				</html>
+			`);
 		});
 
-		// Log when the server is ready to accept connections
-		this.app.addHook('onReady', async () => {
-			logger.info({
-				event: 'SERVER_STARTED',
-				message: `Server is ready to accept connections`,
-				baseURL,
-				environment
-			});
-		});
-
-		// Declare a route
-		this.app.get('/', async (request, reply) => {
-			const tables = await this.database.knex('pg_catalog.pg_tables')
-				.select('tablename')
-				.where({schemaname: 'public'});
-			return reply
-				.type('text/html; charset=utf-8')
-				.send(`
-					<!DOCTYPE html>
-					<html>
-						<head>
-							<title>Hello</title>
-						</head>
-						<body>
-							<p>Hello World!</p>
-							<p>There are database tables:</p>
-							<ul>
-								${tables.map(({tablename}) => `<li>${tablename}</li>`).join('\n')}
-							</ul>
-						</body>
-					</html>
-				`);
-		});
 	}
 
 	/**
@@ -91,8 +139,12 @@ exports.Server = class Server {
 	 * @returns {Promise<void>} - Resolves when the server has been started.
 	 */
 	async start() {
-		await this.app.listen({
-			port: this.port
+		await this.#httpServerListen(this.#port);
+		this.#log.info({
+			event: 'SERVER_STARTED',
+			message: 'Server is ready to accept connections',
+			baseURL: this.#baseURL,
+			environment: this.#environment
 		});
 	}
 
@@ -102,8 +154,8 @@ exports.Server = class Server {
 	 * @returns {Promise<void>} - Resolves when the server has been stopped.
 	 */
 	async stop() {
-		await this.app.close();
-		await this.database.disconnect();
+		await this.#httpServerClose();
+		await this.#database.disconnect();
 	}
 
 };

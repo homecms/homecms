@@ -38,10 +38,11 @@ module.exports = {
 	// Configurations for the web server to run for the tests
 	webServer: {
 		env: {
+			...process.env,
 			PORT: port,
 			DATABASE_URL: databaseURL
 		},
-		command: 'npm start',
+		command: 'npm run migrate:latest && npm run seed demo && npm start',
 		url: baseURL,
 		timeout: 1 * 60 * 1000, // Wait 1 minute for the server to start
 		reuseExistingServer: false

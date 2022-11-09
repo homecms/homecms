@@ -6,6 +6,9 @@
  */
 exports.up = async db => {
 
+	// Enable UUID generation
+	await db.raw(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
+
 	// Define the main content table
 	await db.schema.createTable('content', table => {
 
@@ -14,7 +17,8 @@ exports.up = async db => {
 		table.string('path').notNullable();
 		table.uuid('parentId').nullable().defaultTo(null);
 
-		// Define the actual raw content column
+		// Define the actual content columns
+		table.string('title').notNullable();
 		table.text('raw').notNullable().defaultTo('');
 
 		// Define indexes and relationships

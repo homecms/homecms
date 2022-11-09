@@ -2,8 +2,8 @@
 
 const {test, expect} = require('@playwright/test');
 
-test.describe('home', () => {
-	const startUrl = '/';
+test.describe('about', () => {
+	const startUrl = '/about';
 
 	test.beforeEach(async ({page}) => {
 		await page.goto(startUrl);
@@ -17,7 +17,7 @@ test.describe('home', () => {
 	});
 
 	test('has a title', async ({page}) => {
-		await expect(page).toHaveTitle(/Home/);
+		await expect(page).toHaveTitle(/About/);
 	});
 
 });
