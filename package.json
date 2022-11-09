@@ -23,8 +23,15 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "node .",
-    "start:dev": "nodemon . | pino-pretty --messageKey message",
+    "start": "indieweb-cms start",
+    "start:dev": "nodemon --exec 'indieweb-cms start' .",
+    "db:create": "npm run db:create:dev && npm run db:create:test",
+    "db:create:dev": "createdb indieweb-cms || true",
+    "db:create:test": "createdb indieweb-cms-test || true",
+    "migrate": "npm run migrate:latest",
+    "migrate:latest": "indieweb-cms migrate:latest",
+    "migrate:up": "indieweb-cms migrate:up",
+    "migrate:down": "indieweb-cms migrate:down",
     "verify": "npm run verify:eslint && npm run verify:types",
     "verify:eslint": "eslint .",
     "verify:types": "tsc --noEmit --project ./jsconfig.json",
@@ -33,6 +40,9 @@
     "test:coverage": "nyc npm run test:unit",
     "test:end-to-end": "playwright test",
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "@indieweb-cms/cli": "^0.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",

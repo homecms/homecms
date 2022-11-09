@@ -1,14 +1,8 @@
 'use strict';
 
-require('dotenv').config();
+const {createLogger} = require('@indieweb-cms/logger');
 
-/**
- * @typedef {object} Config
- * @property {string} baseURL - Base URL of the locally running app.
- * @property {string} databaseURL - PostgreSQL database the app will connect to.
- * @property {'ci' | 'development' | 'production'} environment - Environment the CMS will run on.
- * @property {number} port - HTTP port that the CMS will run on.
- */
+require('dotenv').config();
 
 // Work out the database URL
 const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/indieweb-cms';
@@ -23,12 +17,22 @@ if (environment === 'development' && process.env.CI) {
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 const baseURL = `http://localhost:${port}/`;
 
+// Work out whether we can/should prettify logs
+const doPrettyLogs = environment !== 'production';
+
+// Create a logger and pass through the log level
+const logger = createLogger({
+	level: process.env.LOG_LEVEL || 'info', // TODO base on environment?
+	pretty: doPrettyLogs
+});
+
 /**
- * @type {Config}
+ * @type {import('@indieweb-cms/database').DatabaseConfig & import('@indieweb-cms/server').ServerConfig}
  */
 module.exports = Object.freeze({
 	baseURL,
 	databaseURL,
 	environment,
+	logger,
 	port
 });

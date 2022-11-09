@@ -5,6 +5,7 @@ const td = require('testdouble');
 
 describe('@indieweb-cms/config', () => {
 	let config;
+	let createLogger;
 	let dotenv;
 	let originalEnv;
 
@@ -15,11 +16,18 @@ describe('@indieweb-cms/config', () => {
 		});
 		dotenv = require('dotenv');
 
+		td.replace('@indieweb-cms/logger', {
+			createLogger: td.func()
+		});
+		createLogger = require('@indieweb-cms/logger').createLogger;
+		td.when(createLogger(), {ignoreExtraArgs: true}).thenReturn('mock-logger');
+
 		originalEnv = process.env;
 
 		process.env = {
 			CI: undefined,
 			DATABASE_URL: undefined,
+			LOG_LEVEL: undefined,
 			NODE_ENV: undefined,
 			PORT: undefined
 		};
@@ -32,6 +40,13 @@ describe('@indieweb-cms/config', () => {
 
 	it('loads configurations from a .env file', () => {
 		td.verify(dotenv.config(), {times: 1});
+	});
+
+	it('creates a new logger with a log level of "info" and prettification on', () => {
+		td.verify(createLogger({
+			level: 'info',
+			pretty: true
+		}), {times: 1});
 	});
 
 	it('exports a frozen object', () => {
@@ -55,6 +70,12 @@ describe('@indieweb-cms/config', () => {
 	describe('.environment', () => {
 		it('is set to "development"', () => {
 			assert.strictEqual(config.environment, 'development');
+		});
+	});
+
+	describe('.logger', () => {
+		it('is set to the created logger', () => {
+			assert.strictEqual(config.logger, 'mock-logger');
 		});
 	});
 
@@ -98,13 +119,42 @@ describe('@indieweb-cms/config', () => {
 
 	});
 
+	describe('when the `LOG_LEVEL` environment variable is set', () => {
+
+		beforeEach(() => {
+			td.reset();
+			td.replace('dotenv', {config: td.func()});
+			td.replace('@indieweb-cms/logger', {createLogger: td.func()});
+			createLogger = require('@indieweb-cms/logger').createLogger;
+			process.env.LOG_LEVEL = 'mock-log-level';
+			config = require('../../..');
+		});
+
+		it('creates a new logger with the specified log level', () => {
+			td.verify(createLogger({
+				level: 'mock-log-level',
+				pretty: true
+			}), {times: 1});
+		});
+
+	});
+
 	describe('when the `NODE_ENV` environment variable is set to "production"', () => {
 
 		beforeEach(() => {
 			td.reset();
 			td.replace('dotenv', {config: td.func()});
+			td.replace('@indieweb-cms/logger', {createLogger: td.func()});
+			createLogger = require('@indieweb-cms/logger').createLogger;
 			process.env.NODE_ENV = 'production';
 			config = require('../../..');
+		});
+
+		it('creates a new logger with a log level of "info" and prettification off', () => {
+			td.verify(createLogger({
+				level: 'info',
+				pretty: false
+			}), {times: 1});
 		});
 
 		describe('.environment', () => {

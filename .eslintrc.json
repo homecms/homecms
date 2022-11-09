@@ -5,6 +5,7 @@
 	"rules": {
 		"max-len": ["warn", {
 			"code": 100,
+			"ignoreComments": true,
 			"ignoreStrings": true,
 			"ignoreTemplateLiterals": true
 		}],

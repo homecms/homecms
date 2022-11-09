@@ -17,7 +17,9 @@
   "main": "lib",
   "dependencies": {
     "@indieweb-cms/database": "^0.0.0",
-    "@indieweb-cms/logger": "^0.0.0",
     "fastify": "^4.9.2"
+  },
+  "devDependencies": {
+    "@indieweb-cms/logger": "^0.0.0"
   }
 }

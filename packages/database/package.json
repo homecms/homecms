@@ -16,8 +16,11 @@
   },
   "main": "lib",
   "dependencies": {
-    "@indieweb-cms/logger": "^0.0.0",
     "knex": "^2.3.0",
+    "lru-cache": "^7.14.1",
     "pg": "^8.8.0"
+  },
+  "devDependencies": {
+    "@indieweb-cms/logger": "^0.0.0"
   }
 }

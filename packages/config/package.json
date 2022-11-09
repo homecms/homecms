@@ -16,6 +16,7 @@
   },
   "main": "lib",
   "dependencies": {
+    "@indieweb-cms/logger": "^0.0.0",
     "dotenv": "^16.0.3"
   }
 }

@@ -6,6 +6,7 @@ const config = require('@indieweb-cms/config');
 const isCi = config.environment === 'ci';
 const port = process.env.PORT || 3456;
 const baseURL = `http://localhost:${port}/`;
+const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/indieweb-cms-test';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -36,7 +37,10 @@ module.exports = {
 
 	// Configurations for the web server to run for the tests
 	webServer: {
-		env: {PORT: port},
+		env: {
+			PORT: port,
+			DATABASE_URL: databaseURL
+		},
 		command: 'npm start',
 		url: baseURL,
 		timeout: 1 * 60 * 1000, // Wait 1 minute for the server to start
