@@ -1,0 +1,23 @@
+{
+  "name": "@indieweb-cms/database",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The database component of indieweb-cms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rowanmanning/indieweb-cms.git",
+    "directory": "packages/database"
+  },
+  "homepage": "https://github.com/rowanmanning/indieweb-cms/tree/main/packages/database",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x"
+  },
+  "main": "lib",
+  "dependencies": {
+    "@indieweb-cms/logger": "^0.0.0",
+    "knex": "^2.3.0",
+    "pg": "^8.8.0"
+  }
+}

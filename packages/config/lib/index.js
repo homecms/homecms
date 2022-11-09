@@ -5,9 +5,13 @@ require('dotenv').config();
 /**
  * @typedef {object} Config
  * @property {string} baseURL - Base URL of the locally running app.
+ * @property {string} databaseURL - PostgreSQL database the app will connect to.
  * @property {'ci' | 'development' | 'production'} environment - Environment the CMS will run on.
  * @property {number} port - HTTP port that the CMS will run on.
  */
+
+// Work out the database URL
+const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/indieweb-cms';
 
 // Work out what environment we're running in
 let environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
@@ -24,6 +28,7 @@ const baseURL = `http://localhost:${port}/`;
  */
 module.exports = Object.freeze({
 	baseURL,
+	databaseURL,
 	environment,
 	port
 });

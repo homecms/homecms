@@ -19,6 +19,7 @@ describe('@indieweb-cms/config', () => {
 
 		process.env = {
 			CI: undefined,
+			DATABASE_URL: undefined,
 			NODE_ENV: undefined,
 			PORT: undefined
 		};
@@ -42,6 +43,12 @@ describe('@indieweb-cms/config', () => {
 	describe('.baseURL', () => {
 		it('is set to localhost with a default port', () => {
 			assert.strictEqual(config.baseURL, 'http://localhost:3000/');
+		});
+	});
+
+	describe('.databaseURL', () => {
+		it('is set to a default PostgreSQL connection string', () => {
+			assert.strictEqual(config.databaseURL, 'postgresql://localhost/indieweb-cms');
 		});
 	});
 
@@ -69,6 +76,23 @@ describe('@indieweb-cms/config', () => {
 		describe('.environment', () => {
 			it('is set to "ci"', () => {
 				assert.strictEqual(config.environment, 'ci');
+			});
+		});
+
+	});
+
+	describe('when the `DATABASE_URL` environment variable is set', () => {
+
+		beforeEach(() => {
+			td.reset();
+			td.replace('dotenv', {config: td.func()});
+			process.env.DATABASE_URL = 'mock-database-url';
+			config = require('../../..');
+		});
+
+		describe('.databaseURL', () => {
+			it('is set to the configured database URL', () => {
+				assert.strictEqual(config.databaseURL, 'mock-database-url');
 			});
 		});
 
