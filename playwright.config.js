@@ -13,7 +13,7 @@ const baseURL = `http://localhost:${port}/`;
  */
 module.exports = {
 	testDir: './test/end-to-end',
-	outputDir: 'test/output/results', // Test artifacts (screenshots, videos, traces)
+	outputDir: 'test/output/playwright-results', // Test artifacts (screenshots, videos, traces)
 
 	// Wait 30 seconds max for each test
 	// Wait 5 seconds max for each expect call
@@ -31,7 +31,7 @@ module.exports = {
 	// Reporter to use (https://playwright.dev/docs/test-reporters)
 	reporter: [
 		[isCi ? 'github' : 'list'],
-		['html', {outputFolder: 'test/output/html'}]
+		['html', {outputFolder: 'test/output/playwright-html'}]
 	],
 
 	// Configurations for the web server to run for the tests

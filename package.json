@@ -70,7 +70,9 @@
     "reporter": [
       "html",
       "text"
-    ]
+    ],
+    "report-dir": "test/output/coverage",
+    "temp-dir": "test/output/nyc"
   },
   "mocha": {
     "timeout": 10000
