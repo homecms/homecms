@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@indieweb-cms/config": "^0.0.0",
-    "@indieweb-cms/database": "^0.0.0",
+    "@indieweb-cms/data": "^0.0.0",
     "@indieweb-cms/server": "^0.0.0",
     "commander": "^9.4.1"
   }

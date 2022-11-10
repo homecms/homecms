@@ -1,7 +1,7 @@
 'use strict';
 
 const {createServer} = require('node:http');
-const {Database} = require('@indieweb-cms/database');
+const {DataStore} = require('@indieweb-cms/data');
 const express = require('express');
 const {promisify} = require('node:util');
 
@@ -29,9 +29,9 @@ exports.Server = class Server {
 	#baseURL;
 
 	/**
-	 * @type {Database}
+	 * @type {DataStore}
 	 */
-	#database;
+	#dataStore;
 
 	/**
 	 * @type {string}
@@ -66,7 +66,7 @@ exports.Server = class Server {
 	/**
 	 * Server constructor.
 	 *
-	 * @param {ServerConfig & import('@indieweb-cms/database').DatabaseConfig} config - The server configuration.
+	 * @param {ServerConfig & import('@indieweb-cms/data').DataStoreConfig} config - The server configuration.
 	 */
 	constructor({baseURL, databaseURL, environment, logger, port}) {
 		this.#baseURL = baseURL;
@@ -74,8 +74,8 @@ exports.Server = class Server {
 		this.#log = logger;
 		this.#port = port;
 
-		// Initialise the database
-		this.#database = new Database({
+		// Initialise the data store
+		this.#dataStore = new DataStore({
 			databaseURL,
 			logger
 		});
@@ -94,7 +94,7 @@ exports.Server = class Server {
 	 * Initialise the app routes.
 	 */
 	#initialiseRoutes() {
-		const {content: contentModel} = this.#database.models;
+		const {content: contentModel} = this.#dataStore.models;
 
 		// Declare the main content route
 		this.#app.get(/.*/, async (request, response, next) => {
@@ -154,7 +154,7 @@ exports.Server = class Server {
 	 */
 	async stop() {
 		await this.#httpServerClose();
-		await this.#database.disconnect();
+		await this.#dataStore.disconnect();
 	}
 
 };

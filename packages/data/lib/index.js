@@ -6,13 +6,13 @@ const LRU = require('lru-cache');
 const path = require('node:path');
 
 /**
- * @typedef {object} DatabaseConfig
+ * @typedef {object} DataStoreConfig
  * @property {string} databaseURL - The PostgreSQL connection string for the database.
  * @property {import('@indieweb-cms/logger').Logger} logger - The logger to use.
  */
 
 /**
- * @typedef {object} DatabaseModels
+ * @typedef {object} DataModels
  * @property {ContentModel} content - Content model functions.
  */
 
@@ -20,9 +20,9 @@ const MIGRATION_DIRECTORY = path.resolve(__dirname, '..', 'migrations');
 const SEED_DATA_DIRECTORY = path.resolve(__dirname, '..', 'seed-data');
 
 /**
- * Class representing a database.
+ * Class representing a data store.
  */
-exports.Database = class Database {
+exports.DataStore = class DataStore {
 
 	/**
 	 * @type {LRU}
@@ -40,10 +40,10 @@ exports.Database = class Database {
 	log;
 
 	/**
-	 * @type {DatabaseModels}
+	 * @type {DataModels}
 	 */
 	models = {
-		content: new ContentModel({database: this})
+		content: new ContentModel({dataStore: this})
 	};
 
 	/**
@@ -64,9 +64,9 @@ exports.Database = class Database {
 	};
 
 	/**
-	 * Database constructor.
+	 * DataStore constructor.
 	 *
-	 * @param {DatabaseConfig} config - The database configuration.
+	 * @param {DataStoreConfig} config - The data store configuration.
 	 */
 	constructor({databaseURL, logger}) {
 		this.log = logger;
@@ -117,7 +117,7 @@ exports.Database = class Database {
 	}
 
 	/**
-	 * Apply all migrations until the database is up-to-date.
+	 * Apply all migrations until the PostgreSQL database is up-to-date.
 	 *
 	 * @returns {Promise<void>} - Resolves when the migration is complete.
 	 */
@@ -169,7 +169,7 @@ exports.Database = class Database {
 	}
 
 	/**
-	 * Add a directory of seed data to the database.
+	 * Add a directory of seed data to the PostgreSQL database.
 	 *
 	 * @param {string} name - The name of the seed data directory to add.
 	 * @returns {Promise<void>} - Resolves when the seed data has been created.
@@ -183,7 +183,7 @@ exports.Database = class Database {
 	}
 
 	/**
-	 * @returns {Promise<void>} - Resolves when the database is disconnected.
+	 * @returns {Promise<void>} - Resolves when all databases are disconnected.
 	 */
 	async disconnect() {
 		await this.knex.destroy();

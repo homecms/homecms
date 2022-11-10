@@ -27,7 +27,7 @@ const logger = createLogger({
 });
 
 /**
- * @type {import('@indieweb-cms/database').DatabaseConfig & import('@indieweb-cms/server').ServerConfig}
+ * @type {import('@indieweb-cms/data').DataStoreConfig & import('@indieweb-cms/server').ServerConfig}
  */
 module.exports = Object.freeze({
 	baseURL,

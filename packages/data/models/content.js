@@ -2,7 +2,7 @@
 
 /**
  * @typedef {object} ModelOptions
- * @property {import('../lib/index').Database} database - The database to perform operations on.
+ * @property {import('../lib/index').DataStore} dataStore - The data store to perform operations on.
  */
 
 /**
@@ -11,17 +11,17 @@
 exports.ContentModel = class ContentModel {
 
 	/**
-	 * @type {import('../lib/index').Database}
+	 * @type {import('../lib/index').DataStore}
 	 */
-	#database;
+	#dataStore;
 
 	/**
 	 * Model constructor.
 	 *
 	 * @param {ModelOptions} options - The model configuration.
 	 */
-	constructor({database}) {
-		this.#database = database;
+	constructor({dataStore}) {
+		this.#dataStore = dataStore;
 	}
 
 	/**
@@ -32,7 +32,7 @@ exports.ContentModel = class ContentModel {
 	 */
 	async findContentByPath(path) {
 		// TODO create a class representation of the content
-		return await this.#database.knex('content').first('*').where({path});
+		return await this.#dataStore.knex('content').first('*').where({path});
 	}
 
 };

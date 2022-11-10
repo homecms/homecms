@@ -16,7 +16,7 @@
   },
   "main": "lib",
   "dependencies": {
-    "@indieweb-cms/database": "^0.0.0",
+    "@indieweb-cms/data": "^0.0.0",
     "express": "^5.0.0-beta.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 'use strict';
 
-const {Database} = require('@indieweb-cms/database');
+const {DataStore} = require('@indieweb-cms/data');
 const {databaseURL, logger} = require('@indieweb-cms/config');
 const {program} = require('commander');
 
@@ -11,12 +11,12 @@ program
 	.description('undo a migration')
 	.action(async name => {
 		try {
-			const database = new Database({
+			const dataStore = new DataStore({
 				databaseURL,
 				logger
 			});
-			await database.migrateDown(name);
-			await database.disconnect();
+			await dataStore.migrateDown(name);
+			await dataStore.disconnect();
 		} catch (error) {
 			logger.error(error);
 			process.exit(1);

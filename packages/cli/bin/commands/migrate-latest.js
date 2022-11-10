@@ -1,6 +1,6 @@
 'use strict';
 
-const {Database} = require('@indieweb-cms/database');
+const {DataStore} = require('@indieweb-cms/data');
 const {databaseURL, logger} = require('@indieweb-cms/config');
 const {program} = require('commander');
 
@@ -10,12 +10,12 @@ program
 	.description('run all migrations which have not yet been run')
 	.action(async () => {
 		try {
-			const database = new Database({
+			const dataStore = new DataStore({
 				databaseURL,
 				logger
 			});
-			await database.migrateToLatest();
-			await database.disconnect();
+			await dataStore.migrateToLatest();
+			await dataStore.disconnect();
 		} catch (error) {
 			logger.error(error);
 			process.exit(1);
