@@ -1,6 +1,7 @@
 'use strict';
 
-const {knex} = require('knex');
+const {ContentModel} = require('../models/content');
+const {knex, Knex} = require('knex');
 const LRU = require('lru-cache');
 const path = require('node:path');
 
@@ -8,6 +9,11 @@ const path = require('node:path');
  * @typedef {object} DatabaseConfig
  * @property {string} databaseURL - The PostgreSQL connection string for the database.
  * @property {import('@indieweb-cms/logger').Logger} logger - The logger to use.
+ */
+
+/**
+ * @typedef {object} DatabaseModels
+ * @property {ContentModel} content - Content model functions.
  */
 
 const MIGRATION_DIRECTORY = path.resolve(__dirname, '..', 'migrations');
@@ -34,18 +40,25 @@ exports.Database = class Database {
 	log;
 
 	/**
-	 * @private
+	 * @type {DatabaseModels}
 	 */
-	baseMigrationConfig = {
+	models = {
+		content: new ContentModel({database: this})
+	};
+
+	/**
+	 * @type {Knex.MigratorConfig}
+	 */
+	#baseMigrationConfig = {
 		directory: MIGRATION_DIRECTORY,
 		tableName: 'migrations',
 		stub: path.resolve(__dirname, 'migration-template.js')
 	};
 
 	/**
-	 * @private
+	 * @type {Knex.SeederConfig}
 	 */
-	baseSeedDataConfig = {
+	#baseSeedDataConfig = {
 		recursive: true,
 		stub: path.resolve(__dirname, 'seed-data-template.js')
 	};
@@ -99,7 +112,7 @@ exports.Database = class Database {
 	 * @returns {Promise<void>} - Resolves when the migration has been created.
 	 */
 	async createMigration(name) {
-		await this.knex.migrate.make(name, this.baseMigrationConfig);
+		await this.knex.migrate.make(name, this.#baseMigrationConfig);
 		this.log.info(`Migration ${name} created`);
 	}
 
@@ -109,7 +122,7 @@ exports.Database = class Database {
 	 * @returns {Promise<void>} - Resolves when the migration is complete.
 	 */
 	async migrateToLatest() {
-		await this.knex.migrate.latest(this.baseMigrationConfig);
+		await this.knex.migrate.latest(this.#baseMigrationConfig);
 		this.log.info('Database migrated to the latest version');
 	}
 
@@ -122,7 +135,7 @@ exports.Database = class Database {
 	async migrateUp(name) {
 		await this.knex.migrate.up({
 			name,
-			...this.baseMigrationConfig
+			...this.#baseMigrationConfig
 		});
 		this.log.info(`Database migrated up${name ? ` to ${name}` : ''}`);
 	}
@@ -136,7 +149,7 @@ exports.Database = class Database {
 	async migrateDown(name) {
 		await this.knex.migrate.down({
 			name,
-			...this.baseMigrationConfig
+			...this.#baseMigrationConfig
 		});
 		this.log.info(`Database migration${name ? ` ${name}` : ''} undone`);
 	}
@@ -150,7 +163,7 @@ exports.Database = class Database {
 	async createSeedData(name) {
 		await this.knex.seed.make('index', {
 			directory: path.join(SEED_DATA_DIRECTORY, name),
-			...this.baseSeedDataConfig
+			...this.#baseSeedDataConfig
 		});
 		this.log.info(`Seed data ${name} created`);
 	}
@@ -164,7 +177,7 @@ exports.Database = class Database {
 	async addSeedData(name) {
 		await this.knex.seed.run({
 			directory: path.join(SEED_DATA_DIRECTORY, name),
-			...this.baseSeedDataConfig
+			...this.#baseSeedDataConfig
 		});
 		this.log.info(`Seed data ${name} created`);
 	}

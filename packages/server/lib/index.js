@@ -94,6 +94,7 @@ exports.Server = class Server {
 	 * Initialise the app routes.
 	 */
 	#initialiseRoutes() {
+		const {content: contentModel} = this.#database.models;
 
 		// Declare the main content route
 		this.#app.get(/.*/, async (request, response, next) => {
@@ -102,9 +103,7 @@ exports.Server = class Server {
 			const path = request.path.toLowerCase();
 
 			// Fetch the content
-			const content = await this.#database.knex('content')
-				.first('*')
-				.where({path});
+			const content = await contentModel.findContentByPath(path);
 
 			// If there's no content, move along
 			if (!content) {
