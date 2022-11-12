@@ -94,7 +94,7 @@ exports.Server = class Server {
 	 * Initialise the app routes.
 	 */
 	#initialiseRoutes() {
-		const {content: contentModel} = this.#dataStore.models;
+		const {models} = this.#dataStore;
 
 		// Declare the main content route
 		this.#app.get(/.*/, async (request, response, next) => {
@@ -103,7 +103,7 @@ exports.Server = class Server {
 			const path = request.path.toLowerCase();
 
 			// Fetch the content
-			const content = await contentModel.findContentByPath(path);
+			const content = await models.content.findOneByPath(path);
 
 			// If there's no content, move along
 			if (!content) {

@@ -1,38 +1,27 @@
 'use strict';
 
-/**
- * @typedef {object} ModelOptions
- * @property {import('../lib/index').DataStore} dataStore - The data store to perform operations on.
- */
+const {Model} = require('../lib/model');
 
 /**
  * Class representing a content model.
  */
-exports.ContentModel = class ContentModel {
+exports.ContentModel = class ContentModel extends Model {
 
 	/**
-	 * @type {import('../lib/index').DataStore}
+	 * @protected
+	 * @readonly
+	 * @type {string}
 	 */
-	#dataStore;
-
-	/**
-	 * Model constructor.
-	 *
-	 * @param {ModelOptions} options - The model configuration.
-	 */
-	constructor({dataStore}) {
-		this.#dataStore = dataStore;
-	}
+	tableName = 'content';
 
 	/**
 	 * Find a single piece of content by path.
 	 *
 	 * @param {string} path - The path to find content for.
-	 * @returns {Promise<any>} - TODO.
+	 * @returns {Promise<null | Object<string, any>>} - Returns the content.
 	 */
-	async findContentByPath(path) {
-		// TODO create a class representation of the content
-		return await this.#dataStore.knex('content').first('*').where({path});
+	async findOneByPath(path) {
+		return this.findOne({path});
 	}
 
 };
