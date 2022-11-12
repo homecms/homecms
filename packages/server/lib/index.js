@@ -96,11 +96,18 @@ exports.Server = class Server {
 	#initialiseRoutes() {
 		const {models} = this.#dataStore;
 
+		this.#app.get('/__system/health', (request, response) => {
+			response.status(200).send({ok: true});
+		});
+
 		// Declare the main content route
 		this.#app.get(/.*/, async (request, response, next) => {
 
 			// Sanitize the path
-			const path = request.path.toLowerCase();
+			let path = request.path.toLowerCase();
+			if (path !== '/') {
+				path = path.replace(/\/$/, '');
+			}
 
 			// Fetch the content
 			const content = await models.content.findOneByPath(path);

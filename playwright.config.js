@@ -43,7 +43,7 @@ module.exports = {
 			DATABASE_URL: databaseURL
 		},
 		command: 'npm run migrate:latest && npm run seed demo && npm start',
-		url: baseURL,
+		url: `${baseURL}__system/health`,
 		timeout: 1 * 60 * 1000, // Wait 1 minute for the server to start
 		reuseExistingServer: false
 	},

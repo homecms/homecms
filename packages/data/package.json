@@ -16,6 +16,8 @@
   },
   "main": "lib",
   "dependencies": {
+    "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "knex": "^2.3.0",
     "lru-cache": "^7.14.1",
     "pg": "^8.8.0",
