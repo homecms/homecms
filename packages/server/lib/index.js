@@ -4,6 +4,8 @@ const {createServer} = require('node:http');
 const {DataStore} = require('@indieweb-cms/data');
 const express = require('express');
 const {promisify} = require('node:util');
+const {getSystemRouter} = require('../routes/system');
+const {getContentRouter} = require('../routes/content');
 
 /**
  * @typedef {object} ServerConfig
@@ -94,49 +96,26 @@ exports.Server = class Server {
 	 * Initialise the app routes.
 	 */
 	#initialiseRoutes() {
-		const {models} = this.#dataStore;
+		this.#app.use(getSystemRouter(this));
+		this.#app.use(getContentRouter(this));
+	}
 
-		this.#app.get('/__system/health', (request, response) => {
-			response.status(200).send({ok: true});
-		});
+	/**
+	 * Get the environment the server is running in.
+	 *
+	 * @returns {string} - Returns the current environment.
+	 */
+	get environment() {
+		return this.#environment;
+	}
 
-		// Declare the main content route
-		this.#app.get(/.*/, async (request, response, next) => {
-
-			// Sanitize the path
-			let path = request.path.toLowerCase();
-			if (path !== '/') {
-				path = path.replace(/\/$/, '');
-			}
-
-			// Fetch the content
-			const content = await models.content.findOneByPath(path);
-
-			// If there's no content, move along
-			if (!content) {
-				return next();
-			}
-
-			// If the content path doesn't match exactly, redirect
-			if (content.path !== request.path) {
-				return response.redirect(content.path);
-			}
-
-			// Output the content
-			response.set('content-type', 'text/html; charset=utf-8');
-			response.send(`
-				<!DOCTYPE html>
-				<html>
-					<head>
-						<title>${content.title}</title>
-					</head>
-					<body>
-						${content.raw}
-					</body>
-				</html>
-			`);
-		});
-
+	/**
+	 * Get the data store models for the server.
+	 *
+	 * @returns {import('@indieweb-cms/data').DataModels} - Returns the models.
+	 */
+	get models() {
+		return this.#dataStore.models;
 	}
 
 	/**
