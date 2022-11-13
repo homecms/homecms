@@ -6,23 +6,37 @@ const {Model} = require('../lib/model');
  * The JSON Schema for the model.
  */
 const schema = {
-	title: 'Content',
-	description: 'An item of content',
+	title: 'Page',
+	description: 'A page on the website',
 	type: 'object',
 	properties: {
 		id: {
 			type: 'string',
 			format: 'uuid'
 		},
-		pageId: {
+		path: {
+			type: 'string',
+			minLength: 1,
+			maxLength: 255,
+			pattern: '^(\\/[a-z0-9\\._-]+){1,}$' // Path-like, no trailing slash
+		},
+		parentId: {
 			type: 'string',
 			format: 'uuid'
 		},
-		status: {
+		type: {
 			type: 'string',
-			enum: ['draft', 'published', 'unpublished']
+			enum: ['collection', 'single', 'special']
 		},
 		dateCreated: {
+			type: 'string',
+			format: 'date-time' // TODO this is probably wrong
+		},
+		dateLastModified: {
+			type: 'string',
+			format: 'date-time' // TODO this is probably wrong
+		},
+		dateFirstPublished: {
 			type: 'string',
 			format: 'date-time' // TODO this is probably wrong
 		},
@@ -37,38 +51,36 @@ const schema = {
 		}
 	},
 	required: [
-		'pageId'
+		'path'
 	]
 };
 
 /**
- * Class representing a content model.
+ * Class representing a page model.
  */
-exports.ContentModel = class ContentModel extends Model {
+exports.PageModel = class PageModel extends Model {
 
 	/**
-	 * Content model constructor.
+	 * Page model constructor.
 	 *
 	 * @param {import('../lib/model').ModelOptions} options - The model configuration.
 	 */
 	constructor({dataStore}) {
 		super({
 			dataStore,
-			tableName: 'content',
+			tableName: 'pages',
 			schema
 		});
 	}
 
 	/**
-	 * Find the live piece of content for a page.
+	 * Find a single page by path.
 	 *
-	 * @param {string} pageId - The page ID to find content for.
+	 * @param {string} path - The path to find page for.
 	 * @returns {Promise<null | Object<string, any>>} - Returns the page.
 	 */
-	async findLiveContentForPage(pageId) {
-		return await this.findOne({pageId})
-			.andWhere('status', 'in', ['published', 'unpublished'])
-			.orderBy('dateCreated', 'desc');
+	async findOneByPath(path) {
+		return await this.findOne({path});
 	}
 
 };

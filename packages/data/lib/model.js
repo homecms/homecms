@@ -110,10 +110,10 @@ exports.Model = class Model {
 	 * Find a single document.
 	 *
 	 * @param {ModelDocument} query - The query to use to find the document.
-	 * @returns {Promise<null | ModelDocument>} - Returns the document.
+	 * @returns {import('knex').Knex.QueryBuilder} - Returns the partial query builder.
 	 */
-	async findOne(query) {
-		return await this.dataStore.knex(this.tableName).first('*').where(query) || null;
+	findOne(query) {
+		return this.dataStore.knex(this.tableName).first('*').where(query);
 	}
 
 };

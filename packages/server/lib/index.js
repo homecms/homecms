@@ -5,7 +5,7 @@ const {DataStore} = require('@indieweb-cms/data');
 const express = require('express');
 const {promisify} = require('node:util');
 const {getSystemRouter} = require('../routes/system');
-const {getContentRouter} = require('../routes/content');
+const {getPagesRouter} = require('../routes/pages');
 
 /**
  * @typedef {object} ServerConfig
@@ -97,7 +97,7 @@ exports.Server = class Server {
 	 */
 	#initialiseRoutes() {
 		this.#app.use(getSystemRouter(this));
-		this.#app.use(getContentRouter(this));
+		this.#app.use(getPagesRouter(this));
 	}
 
 	/**

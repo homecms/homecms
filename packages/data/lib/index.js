@@ -3,6 +3,7 @@
 const {ContentModel} = require('../models/content');
 const {knex, Knex} = require('knex');
 const LRU = require('lru-cache');
+const {PageModel} = require('../models/page');
 const path = require('node:path');
 
 /**
@@ -14,6 +15,7 @@ const path = require('node:path');
 /**
  * @typedef {object} DataModels
  * @property {ContentModel} content - Content model functions.
+ * @property {PageModel} page - Page model functions.
  */
 
 const MIGRATION_DIRECTORY = path.resolve(__dirname, '..', 'migrations');
@@ -43,7 +45,8 @@ exports.DataStore = class DataStore {
 	 * @type {DataModels}
 	 */
 	models = {
-		content: new ContentModel({dataStore: this})
+		content: new ContentModel({dataStore: this}),
+		page: new PageModel({dataStore: this})
 	};
 
 	/**
