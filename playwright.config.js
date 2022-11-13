@@ -42,8 +42,7 @@ module.exports = {
 			PORT: port,
 			DATABASE_URL: databaseURL
 		},
-		// TODO we need to drop all tables to do this reliably
-		command: 'npm run migrate:latest && npm run seed demo && npm start',
+		command: 'npm run migrate:latest && npm run seed clean && npm run seed test && npm start',
 		url: `${baseURL}__system/health`,
 		timeout: 1 * 60 * 1000, // Wait 1 minute for the server to start
 		reuseExistingServer: false

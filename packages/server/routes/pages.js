@@ -60,7 +60,10 @@ exports.getPagesRouter = function getPagesRouter(server) {
 					<title>${content.title}</title>
 				</head>
 				<body>
-					${content.raw}
+					<main>
+						<h1>${content.title}</h1>
+						${content.raw}
+					</main>
 				</body>
 			</html>
 		`);
