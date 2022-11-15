@@ -1,6 +1,6 @@
 {
   "name": "@homecms/data",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The database component of Home CMS",
   "repository": {
     "type": "git",
@@ -23,6 +23,6 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@homecms/logger": "^0.1.0"
+    "@homecms/logger": "^0.1.1"
   }
 }

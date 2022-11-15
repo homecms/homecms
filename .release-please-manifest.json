@@ -1,7 +1,7 @@
 {
-  "packages/cli": "0.1.0",
-  "packages/config": "0.1.0",
-  "packages/data": "0.1.0",
-  "packages/logger": "0.1.0",
-  "packages/server": "0.1.0"
+  "packages/cli": "0.1.1",
+  "packages/config": "0.1.1",
+  "packages/data": "0.1.1",
+  "packages/logger": "0.1.1",
+  "packages/server": "0.1.1"
 }

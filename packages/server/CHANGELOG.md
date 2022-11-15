@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.1](https://github.com/homecms/homecms/compare/server-v0.1.0...server-v0.1.1) (2022-11-15)
+
+
+### Bug Fixes
+
+* bump @rowanmanning/not-found from 3.1.1 to 3.1.2 ([06ad636](https://github.com/homecms/homecms/commit/06ad636c3621af5fca0ce25d137cf74f99bf6afe))
+
+
+### Documentation Changes
+
+* add stub README files to each package ([b09da0c](https://github.com/homecms/homecms/commit/b09da0c9ed9b68f47e5362bca5241fa67d7f5c3b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/data bumped from ^0.1.0 to ^0.1.1
+  * devDependencies
+    * @homecms/logger bumped from ^0.1.0 to ^0.1.1
+
 ## 0.1.0 (2022-11-15)
 
 

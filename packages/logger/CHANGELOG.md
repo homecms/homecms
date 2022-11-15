@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.1](https://github.com/homecms/homecms/compare/logger-v0.1.0...logger-v0.1.1) (2022-11-15)
+
+
+### Bug Fixes
+
+* move pino-pretty to be a regular dependency ([259f183](https://github.com/homecms/homecms/commit/259f183901d2eff8674b221af9bfd926936ba4ab))
+
+
+### Documentation Changes
+
+* add stub README files to each package ([b09da0c](https://github.com/homecms/homecms/commit/b09da0c9ed9b68f47e5362bca5241fa67d7f5c3b))
+
 ## 0.1.0 (2022-11-15)
 
 

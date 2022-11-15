@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.1.1](https://github.com/homecms/homecms/compare/data-v0.1.0...data-v0.1.1) (2022-11-15)
+
+
+### Bug Fixes
+
+* bump ajv from 8.11.0 to 8.11.2 ([c6ce5a8](https://github.com/homecms/homecms/commit/c6ce5a80ad0f1aefc79d688f63a0a08c3eb0d136))
+
+
+### Documentation Changes
+
+* add stub README files to each package ([b09da0c](https://github.com/homecms/homecms/commit/b09da0c9ed9b68f47e5362bca5241fa67d7f5c3b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @homecms/logger bumped from ^0.1.0 to ^0.1.1
+
 ## 0.1.0 (2022-11-15)
 
 

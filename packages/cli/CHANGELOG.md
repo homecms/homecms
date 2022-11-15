@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.1](https://github.com/homecms/homecms/compare/homecms-v0.1.0...homecms-v0.1.1) (2022-11-15)
+
+
+### Documentation Changes
+
+* add stub README files to each package ([b09da0c](https://github.com/homecms/homecms/commit/b09da0c9ed9b68f47e5362bca5241fa67d7f5c3b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/config bumped from ^0.1.0 to ^0.1.1
+    * @homecms/data bumped from ^0.1.0 to ^0.1.1
+    * @homecms/server bumped from ^0.1.0 to ^0.1.1
+
 ## 0.1.0 (2022-11-15)
 
 

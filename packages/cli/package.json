@@ -1,6 +1,6 @@
 {
   "name": "homecms",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A command-line tool for running Home CMS",
   "repository": {
     "type": "git",
@@ -17,9 +17,9 @@
     "homecms": "bin/index.js"
   },
   "dependencies": {
-    "@homecms/config": "^0.1.0",
-    "@homecms/data": "^0.1.0",
-    "@homecms/server": "^0.1.0",
+    "@homecms/config": "^0.1.1",
+    "@homecms/data": "^0.1.1",
+    "@homecms/server": "^0.1.1",
     "commander": "^9.4.1"
   }
 }
