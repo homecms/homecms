@@ -1,7 +1,6 @@
 {
   "name": "@homecms/server",
   "version": "0.0.0",
-  "private": true,
   "description": "The server component of homecms",
   "repository": {
     "type": "git",
