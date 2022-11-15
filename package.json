@@ -10,10 +10,10 @@
   "author": "Rowan Manning (https://rowanmanning.com/)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/homecms.git"
+    "url": "https://github.com/homecms/homecms.git"
   },
-  "homepage": "https://github.com/rowanmanning/homecms",
-  "bugs": "https://github.com/rowanmanning/homecms/issues",
+  "homepage": "https://github.com/homecms/homecms",
+  "bugs": "https://github.com/homecms/homecms/issues",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",

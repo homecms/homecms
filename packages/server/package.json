@@ -1,13 +1,13 @@
 {
   "name": "@homecms/server",
   "version": "0.1.0",
-  "description": "The server component of homecms",
+  "description": "The server component of Home CMS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/homecms.git",
+    "url": "https://github.com/homecms/homecms.git",
     "directory": "packages/server"
   },
-  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/server",
+  "homepage": "https://github.com/homecms/homecms/tree/main/packages/server",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",

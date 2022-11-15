@@ -1,13 +1,13 @@
 {
   "name": "@homecms/data",
   "version": "0.1.0",
-  "description": "The database component of homecms",
+  "description": "The database component of Home CMS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/homecms.git",
+    "url": "https://github.com/homecms/homecms.git",
     "directory": "packages/data"
   },
-  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/data",
+  "homepage": "https://github.com/homecms/homecms/tree/main/packages/data",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",

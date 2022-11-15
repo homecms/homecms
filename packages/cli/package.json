@@ -1,13 +1,13 @@
 {
   "name": "homecms",
   "version": "0.1.0",
-  "description": "A command-line tool for running homecms",
+  "description": "A command-line tool for running Home CMS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/homecms.git",
+    "url": "https://github.com/homecms/homecms.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/cli",
+  "homepage": "https://github.com/homecms/homecms/tree/main/packages/cli",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",

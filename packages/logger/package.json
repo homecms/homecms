@@ -1,13 +1,13 @@
 {
   "name": "@homecms/logger",
   "version": "0.1.0",
-  "description": "A shared logger for homecms",
+  "description": "A shared logger for Home CMS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/homecms.git",
+    "url": "https://github.com/homecms/homecms.git",
     "directory": "packages/logger"
   },
-  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/logger",
+  "homepage": "https://github.com/homecms/homecms/tree/main/packages/logger",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",

@@ -4,10 +4,10 @@
   "description": "A consistent configuration object based on environment variables",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/homecms.git",
+    "url": "https://github.com/homecms/homecms.git",
     "directory": "packages/config"
   },
-  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/config",
+  "homepage": "https://github.com/homecms/homecms/tree/main/packages/config",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",
