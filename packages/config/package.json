@@ -1,6 +1,6 @@
 {
   "name": "@homecms/config",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A consistent configuration object based on environment variables",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "main": "lib",
   "dependencies": {
-    "@homecms/logger": "^0.1.0",
+    "@homecms/logger": "^0.1.1",
     "dotenv": "^16.0.3"
   }
 }
