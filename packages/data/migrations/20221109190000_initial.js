@@ -7,7 +7,7 @@
 exports.up = async db => {
 
 	// Enable UUID generation
-	await db.raw(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
+	await db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
 
 	// Define the pages table
 	await db.schema.createTable('pages', table => {
