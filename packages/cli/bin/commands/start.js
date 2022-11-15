@@ -1,12 +1,12 @@
 'use strict';
 
-const config = require('@indieweb-cms/config');
+const config = require('@homecms/config');
 const {program} = require('commander');
-const {Server} = require('@indieweb-cms/server');
+const {Server} = require('@homecms/server');
 
 // Program options
 program
-	.name('indieweb-cms start')
+	.name('homecms start')
 	.description('run the server')
 	.action(async () => {
 		try {

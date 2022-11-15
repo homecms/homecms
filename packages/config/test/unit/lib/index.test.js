@@ -3,7 +3,7 @@
 const {assert} = require('chai');
 const td = require('testdouble');
 
-describe('@indieweb-cms/config', () => {
+describe('@homecms/config', () => {
 	let config;
 	let createLogger;
 	let dotenv;
@@ -16,10 +16,10 @@ describe('@indieweb-cms/config', () => {
 		});
 		dotenv = require('dotenv');
 
-		td.replace('@indieweb-cms/logger', {
+		td.replace('@homecms/logger', {
 			createLogger: td.func()
 		});
-		createLogger = require('@indieweb-cms/logger').createLogger;
+		createLogger = require('@homecms/logger').createLogger;
 		td.when(createLogger(), {ignoreExtraArgs: true}).thenReturn('mock-logger');
 
 		originalEnv = process.env;
@@ -63,7 +63,7 @@ describe('@indieweb-cms/config', () => {
 
 	describe('.databaseURL', () => {
 		it('is set to a default PostgreSQL connection string', () => {
-			assert.strictEqual(config.databaseURL, 'postgresql://localhost/indieweb-cms');
+			assert.strictEqual(config.databaseURL, 'postgresql://localhost/homecms');
 		});
 	});
 
@@ -124,8 +124,8 @@ describe('@indieweb-cms/config', () => {
 		beforeEach(() => {
 			td.reset();
 			td.replace('dotenv', {config: td.func()});
-			td.replace('@indieweb-cms/logger', {createLogger: td.func()});
-			createLogger = require('@indieweb-cms/logger').createLogger;
+			td.replace('@homecms/logger', {createLogger: td.func()});
+			createLogger = require('@homecms/logger').createLogger;
 			process.env.LOG_LEVEL = 'mock-log-level';
 			config = require('../../..');
 		});
@@ -144,8 +144,8 @@ describe('@indieweb-cms/config', () => {
 		beforeEach(() => {
 			td.reset();
 			td.replace('dotenv', {config: td.func()});
-			td.replace('@indieweb-cms/logger', {createLogger: td.func()});
-			createLogger = require('@indieweb-cms/logger').createLogger;
+			td.replace('@homecms/logger', {createLogger: td.func()});
+			createLogger = require('@homecms/logger').createLogger;
 			process.env.NODE_ENV = 'production';
 			config = require('../../..');
 		});

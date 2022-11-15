@@ -1,12 +1,12 @@
 'use strict';
 
 const {devices} = require('@playwright/test');
-const config = require('@indieweb-cms/config');
+const config = require('@homecms/config');
 
 const isCi = config.environment === 'ci';
 const port = process.env.PORT || 3456;
 const baseURL = `http://localhost:${port}/`;
-const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/indieweb-cms-test';
+const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/homecms-test';
 
 /**
  * @see https://playwright.dev/docs/test-configuration

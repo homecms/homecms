@@ -1,14 +1,14 @@
 {
-  "name": "@indieweb-cms/server",
+  "name": "@homecms/server",
   "version": "0.0.0",
   "private": true,
-  "description": "The server component of indieweb-cms",
+  "description": "The server component of homecms",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/indieweb-cms.git",
+    "url": "https://github.com/rowanmanning/homecms.git",
     "directory": "packages/server"
   },
-  "homepage": "https://github.com/rowanmanning/indieweb-cms/tree/main/packages/server",
+  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/server",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",
@@ -16,7 +16,7 @@
   },
   "main": "lib",
   "dependencies": {
-    "@indieweb-cms/data": "^0.0.0",
+    "@homecms/data": "^0.0.0",
     "@rowanmanning/not-found": "^3.1.1",
     "@rowanmanning/render-error-page": "^4.1.0",
     "express": "^4.18.2",
@@ -25,6 +25,6 @@
     "liquidjs": "^9.42.1"
   },
   "devDependencies": {
-    "@indieweb-cms/logger": "^0.0.0"
+    "@homecms/logger": "^0.0.0"
   }
 }

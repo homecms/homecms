@@ -9,7 +9,7 @@ const path = require('node:path');
 /**
  * @typedef {object} DataStoreConfig
  * @property {string} databaseURL - The PostgreSQL connection string for the database.
- * @property {import('@indieweb-cms/logger').Logger} logger - The logger to use.
+ * @property {import('@homecms/logger').Logger} logger - The logger to use.
  */
 
 /**
@@ -37,7 +37,7 @@ exports.DataStore = class DataStore {
 	knex;
 
 	/**
-	 * @type {import('@indieweb-cms/logger').Logger}
+	 * @type {import('@homecms/logger').Logger}
 	 */
 	log;
 
@@ -84,7 +84,7 @@ exports.DataStore = class DataStore {
 		this.knex = knex({
 			client: 'pg',
 			connection: databaseURL,
-			searchPath: ['indieweb-cms', 'public'], // TODO do we need this?
+			searchPath: ['homecms', 'public'], // TODO do we need this?
 			acquireConnectionTimeout: 30 * 1000, // 30 seconds
 			pool: {
 				afterCreate: (_, done) => {

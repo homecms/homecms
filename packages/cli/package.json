@@ -1,26 +1,26 @@
 {
-  "name": "@indieweb-cms/cli",
+  "name": "@homecms/cli",
   "version": "0.0.0",
   "private": true,
-  "description": "A command-line tool for running indieweb-cms",
+  "description": "A command-line tool for running homecms",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/indieweb-cms.git",
+    "url": "https://github.com/rowanmanning/homecms.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://github.com/rowanmanning/indieweb-cms/tree/main/packages/cli",
+  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/cli",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",
     "npm": "8.x"
   },
   "bin": {
-    "indieweb-cms": "bin/index.js"
+    "homecms": "bin/index.js"
   },
   "dependencies": {
-    "@indieweb-cms/config": "^0.0.0",
-    "@indieweb-cms/data": "^0.0.0",
-    "@indieweb-cms/server": "^0.0.0",
+    "@homecms/config": "^0.0.0",
+    "@homecms/data": "^0.0.0",
+    "@homecms/server": "^0.0.0",
     "commander": "^9.4.1"
   }
 }

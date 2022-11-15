@@ -1,12 +1,12 @@
 'use strict';
 
-const {DataStore} = require('@indieweb-cms/data');
-const {databaseURL, logger} = require('@indieweb-cms/config');
+const {DataStore} = require('@homecms/data');
+const {databaseURL, logger} = require('@homecms/config');
 const {program} = require('commander');
 
 // Program options
 program
-	.name('indieweb-cms migrate:latest')
+	.name('homecms migrate:latest')
 	.description('run all migrations which have not yet been run')
 	.action(async () => {
 		try {

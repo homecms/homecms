@@ -1,7 +1,7 @@
 'use strict';
 
 const {createServer} = require('node:http');
-const {DataStore} = require('@indieweb-cms/data');
+const {DataStore} = require('@homecms/data');
 const express = require('express');
 const {getSystemRouter} = require('../routes/system');
 const {getPagesRouter} = require('../routes/pages');
@@ -17,7 +17,7 @@ const renderErrorPage = require('@rowanmanning/render-error-page');
  * @typedef {object} ServerConfig
  * @property {string} baseURL - Base URL of the locally running app.
  * @property {'ci' | 'development' | 'production'} environment - Environment the CMS will run on.
- * @property {import('@indieweb-cms/logger')} logger - The logger to use.
+ * @property {import('@homecms/logger')} logger - The logger to use.
  * @property {number} port - HTTP port that the CMS will run on.
  */
 
@@ -62,7 +62,7 @@ exports.Server = class Server {
 	#httpServerListen;
 
 	/**
-	 * @type {import('@indieweb-cms/logger').Logger}
+	 * @type {import('@homecms/logger').Logger}
 	 */
 	#log;
 
@@ -79,7 +79,7 @@ exports.Server = class Server {
 	/**
 	 * Server constructor.
 	 *
-	 * @param {ServerConfig & import('@indieweb-cms/data').DataStoreConfig} config - The server configuration.
+	 * @param {ServerConfig & import('@homecms/data').DataStoreConfig} config - The server configuration.
 	 */
 	constructor({baseURL, databaseURL, environment, logger, port}) {
 		this.#baseURL = baseURL;
@@ -168,7 +168,7 @@ exports.Server = class Server {
 	/**
 	 * Get the data store models for the server.
 	 *
-	 * @returns {import('@indieweb-cms/data').DataModels} - Returns the models.
+	 * @returns {import('@homecms/data').DataModels} - Returns the models.
 	 */
 	get models() {
 		return this.#dataStore.models;

@@ -1,12 +1,12 @@
 'use strict';
 
-const {DataStore} = require('@indieweb-cms/data');
-const {databaseURL, logger} = require('@indieweb-cms/config');
+const {DataStore} = require('@homecms/data');
+const {databaseURL, logger} = require('@homecms/config');
 const {program} = require('commander');
 
 // Program options
 program
-	.name('indieweb-cms create:seed')
+	.name('homecms create:seed')
 	.argument('<name>', 'the seed directory name')
 	.description('create a database seed data')
 	.action(async name => {

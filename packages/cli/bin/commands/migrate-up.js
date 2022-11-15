@@ -1,12 +1,12 @@
 'use strict';
 
-const {DataStore} = require('@indieweb-cms/data');
-const {databaseURL, logger} = require('@indieweb-cms/config');
+const {DataStore} = require('@homecms/data');
+const {databaseURL, logger} = require('@homecms/config');
 const {program} = require('commander');
 
 // Program options
 program
-	.name('indieweb-cms migrate:up')
+	.name('homecms migrate:up')
 	.argument('[name]', 'the migration to apply (defaults to the next unapplied)')
 	.description('apply a migration')
 	.action(async name => {

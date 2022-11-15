@@ -1,14 +1,14 @@
 {
-  "name": "@indieweb-cms/logger",
+  "name": "@homecms/logger",
   "version": "0.0.0",
   "private": true,
-  "description": "A shared logger for indieweb-cms",
+  "description": "A shared logger for homecms",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/indieweb-cms.git",
+    "url": "https://github.com/rowanmanning/homecms.git",
     "directory": "packages/logger"
   },
-  "homepage": "https://github.com/rowanmanning/indieweb-cms/tree/main/packages/logger",
+  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/logger",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",

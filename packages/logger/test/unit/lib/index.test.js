@@ -3,7 +3,7 @@
 const {assert} = require('chai');
 const td = require('testdouble');
 
-describe('@indieweb-cms/logger', () => {
+describe('@homecms/logger', () => {
 	let createLogger;
 	let pino;
 

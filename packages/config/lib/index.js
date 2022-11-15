@@ -1,11 +1,11 @@
 'use strict';
 
-const {createLogger} = require('@indieweb-cms/logger');
+const {createLogger} = require('@homecms/logger');
 
 require('dotenv').config();
 
 // Work out the database URL
-const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/indieweb-cms';
+const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/homecms';
 
 // Work out what environment we're running in
 let environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
@@ -27,7 +27,7 @@ const logger = createLogger({
 });
 
 /**
- * @type {import('@indieweb-cms/data').DataStoreConfig & import('@indieweb-cms/server').ServerConfig}
+ * @type {import('@homecms/data').DataStoreConfig & import('@homecms/server').ServerConfig}
  */
 module.exports = Object.freeze({
 	baseURL,

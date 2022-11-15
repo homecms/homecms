@@ -1,5 +1,5 @@
 {
-  "name": "@rowanmanning/indieweb-cms",
+  "name": "homecms",
   "version": "0.0.0",
   "private": true,
   "description": "A CMS for a simple IndieWeb website",
@@ -10,10 +10,10 @@
   "author": "Rowan Manning (https://rowanmanning.com/)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/indieweb-cms.git"
+    "url": "https://github.com/rowanmanning/homecms.git"
   },
-  "homepage": "https://github.com/rowanmanning/indieweb-cms",
-  "bugs": "https://github.com/rowanmanning/indieweb-cms/issues",
+  "homepage": "https://github.com/rowanmanning/homecms",
+  "bugs": "https://github.com/rowanmanning/homecms/issues",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",
@@ -23,19 +23,19 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "indieweb-cms start",
-    "start:dev": "nodemon --exec 'indieweb-cms start' .",
+    "start": "homecms start",
+    "start:dev": "nodemon --exec 'homecms start' .",
     "create:db": "npm run create:db:dev && npm run create:db:test",
-    "create:db:dev": "createdb indieweb-cms || true",
-    "create:db:test": "createdb indieweb-cms-test || true",
-    "create:migration": "indieweb-cms create:migration",
-    "create:seed": "indieweb-cms create:seed",
+    "create:db:dev": "createdb homecms || true",
+    "create:db:test": "createdb homecms-test || true",
+    "create:migration": "homecms create:migration",
+    "create:seed": "homecms create:seed",
     "migrate": "npm run migrate:latest",
-    "migrate:latest": "indieweb-cms migrate:latest",
-    "migrate:up": "indieweb-cms migrate:up",
-    "migrate:down": "indieweb-cms migrate:down",
+    "migrate:latest": "homecms migrate:latest",
+    "migrate:up": "homecms migrate:up",
+    "migrate:down": "homecms migrate:down",
     "seed": "npm run seed:add",
-    "seed:add": "indieweb-cms seed:add",
+    "seed:add": "homecms seed:add",
     "verify": "npm run verify:eslint && npm run verify:types",
     "verify:eslint": "eslint .",
     "verify:types": "tsc --noEmit --project ./jsconfig.json",
@@ -46,7 +46,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@indieweb-cms/cli": "^0.0.0"
+    "@homecms/cli": "^0.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",

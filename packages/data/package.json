@@ -1,14 +1,14 @@
 {
-  "name": "@indieweb-cms/data",
+  "name": "@homecms/data",
   "version": "0.0.0",
   "private": true,
-  "description": "The database component of indieweb-cms",
+  "description": "The database component of homecms",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rowanmanning/indieweb-cms.git",
+    "url": "https://github.com/rowanmanning/homecms.git",
     "directory": "packages/data"
   },
-  "homepage": "https://github.com/rowanmanning/indieweb-cms/tree/main/packages/data",
+  "homepage": "https://github.com/rowanmanning/homecms/tree/main/packages/data",
   "license": "GPL-3.0",
   "engines": {
     "node": "18.x",
@@ -24,6 +24,6 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@indieweb-cms/logger": "^0.0.0"
+    "@homecms/logger": "^0.0.0"
   }
 }
