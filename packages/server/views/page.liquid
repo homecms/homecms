@@ -1,0 +1,15 @@
+
+{% layout 'layouts/default' %}
+
+{% block title -%}
+	{{ content.title }}
+{%- endblock %}
+
+{% block content %}
+
+	<main>
+		<h1>{{ content.title }}</h1>
+		{{ content.raw }}
+	</main>
+
+{% endblock %}

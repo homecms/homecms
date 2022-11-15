@@ -3,9 +3,15 @@
 const {createServer} = require('node:http');
 const {DataStore} = require('@indieweb-cms/data');
 const express = require('express');
-const {promisify} = require('node:util');
 const {getSystemRouter} = require('../routes/system');
 const {getPagesRouter} = require('../routes/pages');
+const {default: helmet} = require('helmet');
+const {Liquid} = require('liquidjs');
+const notFound = require('@rowanmanning/not-found');
+const path = require('node:path');
+const {promisify} = require('node:util');
+const {redirectToHTTPS} = require('express-http-to-https');
+const renderErrorPage = require('@rowanmanning/render-error-page');
 
 /**
  * @typedef {object} ServerConfig
@@ -66,6 +72,11 @@ exports.Server = class Server {
 	#port;
 
 	/**
+	 * @type {import('liquidjs').Liquid}
+	 */
+	#viewEngine;
+
+	/**
 	 * Server constructor.
 	 *
 	 * @param {ServerConfig & import('@indieweb-cms/data').DataStoreConfig} config - The server configuration.
@@ -83,13 +94,58 @@ exports.Server = class Server {
 		});
 
 		// Create the app and server
-		this.#app = express();
-		this.#httpServer = createServer(this.#app);
+		const app = this.#app = express();
+		this.#httpServer = createServer(app);
 		this.#httpServerClose = promisify(this.#httpServer.close.bind(this.#httpServer));
 		this.#httpServerListen = promisify(this.#httpServer.listen.bind(this.#httpServer));
 
+		// Configure default routing behaviour
+		app.enable('case sensitive routing');
+		app.enable('strict routing');
+
+		// Configure JSON output
+		app.set('json spaces', '\t');
+
+		// Remove x-powered-by header
+		app.disable('x-powered-by');
+
+		// Set the trust proxy settings
+		app.set('trust proxy', true);
+
+		// Set up default view data
+		app.locals.language = 'en';
+
+		// Get the view paths
+		const defaultViewPath = path.resolve(__dirname, '..', 'views');
+		// TODO base this on the configured theme
+		const themeViewPath = path.join(process.cwd(), 'views');
+
+		// Set up the view engine
+		this.#viewEngine = new Liquid({
+			cache: this.#environment === 'production',
+			extname: '.liquid',
+			root: [themeViewPath, defaultViewPath]
+		});
+		app.engine('liquid', this.#viewEngine.express());
+		app.set('views', [themeViewPath, defaultViewPath]);
+		app.set('view engine', 'liquid');
+
+		// Set up pre-route middleware
+		app.use(helmet());
+		app.use(redirectToHTTPS([/^localhost:\d+$/i]));
+
 		// Initialise routes
 		this.#initialiseRoutes();
+
+		// Set up post-route middleware
+		app.use(notFound());
+		app.use((error, request, response, next) => {
+			if (!error.status || error.status !== 404) {
+				this.#log.error(error);
+			}
+			next(error);
+		});
+		app.use(renderErrorPage());
 	}
 
 	/**
