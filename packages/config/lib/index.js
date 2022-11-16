@@ -12,7 +12,7 @@ const requireFirst = require('@rowanmanning/require-first');
  * @typedef {object} Config
  * @property {string} [baseURL] - The base URL for the app where requests to the home page should be routed. Defaults to localhost with the `port` configuration.
  * @property {Environment} [environment] - The environment the CMS is running in. Defaults to the `NODE_ENV` environment variable.
- * @property {string} [databaseURL] - The PostgreSQL database connection string. Defaults to the `DATABASE_URL` environment variable or "postgresql://localhost/homecms".
+ * @property {string} [databaseURL] - The PostgreSQL database connection string. Defaults to the `DATABASE_URL` environment variable or "postgresql://localhost/homecms-dev".
  * @property {string} [logLevel] - The level to output logs at. Defaults to the `LOG_LEVEL` environment variable or "info".
  * @property {number} [port] - The HTTP port the CMS will run on. Defaults to the `PORT` environment variable.
  * @property {string} [theme] - The theme the CMS will use. Defaults to "@homecms/theme-limelight".
