@@ -9,9 +9,9 @@ Home CMS is a simple content management system for publishing an [IndieWeb](http
 
 ## Using Home CMS
 
-If you want to use Home CMS to build a website, we provide some technical documentation here to get you set up:
+If you want to use Home CMS to build a website we provide some technical documentation here to get you up and running. These guides assume some technical knowledge.
 
-  * **[🚧 Getting started guide](docs/usage/getting-started.md):** explains how to start using Home CMS to manage your own website
+  * **[✨ Getting started guide](docs/usage/getting-started.md):** explains how to start using Home CMS to manage your own website
 
 
 ## Contributing

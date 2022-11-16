@@ -29,9 +29,7 @@ homecms.js
 homecms.json
 ```
 
-The default configurations for Home CMS aim to work in the majority of use cases, and so hopefully you shouldn't need to make too many changes.
-
-The rest of this guide assumes you're using JavaScript for configuration.
+The default configurations for Home CMS aim to work in the majority of use cases, and so hopefully you shouldn't need to make too many changes. The rest of this guide assumes you're using JavaScript for configuration.
 
 
 ## File format
