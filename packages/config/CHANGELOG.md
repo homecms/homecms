@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://github.com/homecms/homecms/compare/config-v0.1.1...config-v0.2.0) (2022-11-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* overhaul configuration
+
+### Features
+
+* overhaul configuration ([d4e50db](https://github.com/homecms/homecms/commit/d4e50db7fe8a89663a02eaec16b97e397295e200))
+
 ## [0.1.1](https://github.com/homecms/homecms/compare/config-v0.1.0...config-v0.1.1) (2022-11-15)
 
 

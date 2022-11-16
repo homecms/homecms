@@ -1,6 +1,6 @@
 {
   "name": "@homecms/config",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A consistent configuration object based on environment variables",
   "repository": {
     "type": "git",
