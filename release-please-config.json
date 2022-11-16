@@ -34,8 +34,14 @@
 		"packages/data": {},
 		"packages/logger": {},
 		"packages/server": {},
-		"packages/themer": {},
-		"themes/base": {},
-		"themes/limelight": {}
+		"packages/themer": {
+			"release-as": "0.1.0"
+		},
+		"themes/base": {
+			"release-as": "0.1.0"
+		},
+		"themes/limelight": {
+			"release-as": "0.1.0"
+		}
 	}
 }
