@@ -1,5 +1,12 @@
 # Changelog
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/config bumped from ^0.2.0 to ^0.2.1
+    * @homecms/server bumped from ^0.2.0 to ^0.2.1
+
 ## [0.2.0](https://github.com/homecms/homecms/compare/homecms-v0.1.1...homecms-v0.2.0) (2022-11-16)
 
 

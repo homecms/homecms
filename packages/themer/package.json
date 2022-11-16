@@ -1,6 +1,6 @@
 {
   "name": "@homecms/themer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Theme management for Home CMS",
   "repository": {
     "type": "git",

@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.1](https://github.com/homecms/homecms/compare/server-v0.2.0...server-v0.2.1) (2022-11-16)
+
+
+### Features
+
+* add theming ([53bd677](https://github.com/homecms/homecms/commit/53bd67712e67dd12b65fa1810e76656e2f4a46ac))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/theme-base bumped from ^0.0.0 to ^0.1.0
+    * @homecms/theme-limelight bumped from ^0.0.0 to ^0.1.0
+    * @homecms/themer bumped from ^0.0.0 to ^0.1.0
+
 ## [0.2.0](https://github.com/homecms/homecms/compare/server-v0.1.1...server-v0.2.0) (2022-11-16)
 
 
