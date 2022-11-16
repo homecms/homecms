@@ -20,13 +20,14 @@
     "npm": "8.x"
   },
   "workspaces": [
+    "examples/*",
     "packages/*"
   ],
   "scripts": {
     "start": "homecms start",
     "start:dev": "nodemon --exec 'homecms start' .",
     "create:db": "npm run create:db:dev && npm run create:db:test",
-    "create:db:dev": "createdb homecms || true",
+    "create:db:dev": "createdb homecms-dev || true",
     "create:db:test": "createdb homecms-test || true",
     "create:migration": "homecms create:migration",
     "create:seed": "homecms create:seed",
@@ -46,7 +47,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "homecms": "^0.0.0"
+    "homecms": "*"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",

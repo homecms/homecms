@@ -15,7 +15,6 @@
   },
   "main": "lib",
   "dependencies": {
-    "@homecms/logger": "^0.1.1",
-    "dotenv": "^16.0.3"
+    "@homecms/logger": "^0.1.1"
   }
 }

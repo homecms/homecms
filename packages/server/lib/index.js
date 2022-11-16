@@ -17,7 +17,7 @@ const renderErrorPage = require('@rowanmanning/render-error-page');
  * @typedef {object} ServerConfig
  * @property {string} baseURL - Base URL of the locally running app.
  * @property {'ci' | 'development' | 'production'} environment - Environment the CMS will run on.
- * @property {import('@homecms/logger')} logger - The logger to use.
+ * @property {import('@homecms/logger').Logger} logger - The logger to use.
  * @property {number} port - HTTP port that the CMS will run on.
  */
 

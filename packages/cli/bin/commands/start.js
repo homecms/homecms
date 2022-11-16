@@ -1,6 +1,6 @@
 'use strict';
 
-const config = require('@homecms/config');
+const {loadConfig} = require('@homecms/config');
 const {program} = require('commander');
 const {Server} = require('@homecms/server');
 
@@ -8,12 +8,14 @@ const {Server} = require('@homecms/server');
 program
 	.name('homecms start')
 	.description('run the server')
-	.action(async () => {
+	.option('-d, --directory <dir>', 'the directory to look for a config file in', process.cwd())
+	.action(async ({directory}) => {
 		try {
+			const config = loadConfig(directory);
 			const server = new Server(config);
 			await server.start();
-		} catch (error) {
-			config.logger.error(error);
+		} catch (/** @type {any} */ error) {
+			console.log(error.stack);
 			process.exit(1);
 		}
 	})

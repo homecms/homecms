@@ -1,12 +1,11 @@
 'use strict';
 
 const {devices} = require('@playwright/test');
-const config = require('@homecms/config');
+const {loadConfig} = require('@homecms/config');
 
-const isCi = config.environment === 'ci';
-const port = process.env.PORT || 3456;
-const baseURL = `http://localhost:${port}/`;
-const databaseURL = process.env.DATABASE_URL || 'postgresql://localhost/homecms-test';
+const endToEndServerDirectory = './test/end-to-end/server';
+const {baseURL, databaseURL, environment, port} = loadConfig(endToEndServerDirectory);
+const isCi = environment === 'ci';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -42,7 +41,12 @@ module.exports = {
 			PORT: port,
 			DATABASE_URL: databaseURL
 		},
-		command: 'npm run migrate:latest && npm run seed clean && npm run seed test && npm start',
+		command: [
+			'npm run migrate:latest',
+			'npm run seed clean',
+			'npm run seed test',
+			`npm start -- --directory "${endToEndServerDirectory}"`
+		].join(' && '),
 		url: `${baseURL}__system/health`,
 		timeout: 1 * 60 * 1000, // Wait 1 minute for the server to start
 		reuseExistingServer: false

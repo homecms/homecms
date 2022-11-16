@@ -13,6 +13,7 @@
     "node": "18.x",
     "npm": "8.x"
   },
+  "main": "lib/index.js",
   "bin": {
     "homecms": "bin/index.js"
   },
@@ -20,6 +21,7 @@
     "@homecms/config": "^0.1.1",
     "@homecms/data": "^0.1.1",
     "@homecms/server": "^0.1.1",
+    "@rowanmanning/require-first": "^2.1.2",
     "commander": "^9.4.1"
   }
 }
