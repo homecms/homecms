@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/homecms/homecms/compare/config-v0.2.0...config-v0.2.1) (2022-11-16)
+
+
+### Features
+
+* add theming ([53bd677](https://github.com/homecms/homecms/commit/53bd67712e67dd12b65fa1810e76656e2f4a46ac))
+
 ## [0.2.0](https://github.com/homecms/homecms/compare/config-v0.1.1...config-v0.2.0) (2022-11-16)
 
 
