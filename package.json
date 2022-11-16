@@ -21,7 +21,8 @@
   },
   "workspaces": [
     "examples/*",
-    "packages/*"
+    "packages/*",
+    "themes/*"
   ],
   "scripts": {
     "start": "homecms start",

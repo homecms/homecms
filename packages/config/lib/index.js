@@ -15,6 +15,7 @@ const requireFirst = require('@rowanmanning/require-first');
  * @property {string} [databaseURL] - The PostgreSQL database connection string. Defaults to the `DATABASE_URL` environment variable or "postgresql://localhost/homecms".
  * @property {string} [logLevel] - The level to output logs at. Defaults to the `LOG_LEVEL` environment variable or "info".
  * @property {number} [port] - The HTTP port the CMS will run on. Defaults to the `PORT` environment variable.
+ * @property {string} [theme] - The theme the CMS will use. Defaults to "@homecms/theme-limelight".
  */
 
 /**
@@ -25,6 +26,7 @@ const requireFirst = require('@rowanmanning/require-first');
  * @property {import('@homecms/logger').Logger} logger - The app logger.
  * @property {string} logLevel - The level to output logs at.
  * @property {number} port - The HTTP port the CMS will run on.
+ * @property {string} theme - The theme the CMS will use.
  */
 
 /**
@@ -64,7 +66,8 @@ exports.loadConfig = function loadConfig(baseDirectory = process.cwd()) {
 		databaseURL: process.env.DATABASE_URL || 'postgresql://localhost/homecms',
 		environment: defaultEnvironment,
 		logLevel: process.env.LOG_LEVEL || 'info',
-		port: process.env.PORT ? Number(process.env.PORT) : 3000
+		port: process.env.PORT ? Number(process.env.PORT) : 3000,
+		theme: '@homecms/theme-limelight'
 	}, configFile);
 
 	// Set a default base URL

@@ -33,6 +33,9 @@
 		"packages/config": {},
 		"packages/data": {},
 		"packages/logger": {},
-		"packages/server": {}
+		"packages/server": {},
+		"packages/themer": {},
+		"themes/base": {},
+		"themes/limelight": {}
 	}
 }

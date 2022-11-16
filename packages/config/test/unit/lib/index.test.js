@@ -107,6 +107,12 @@ describe('@homecms/config', () => {
 				});
 			});
 
+			describe('.theme', () => {
+				it('is set to a default theme', () => {
+					assert.strictEqual(config.theme, '@homecms/theme-limelight');
+				});
+			});
+
 		});
 
 		describe('when `baseDirectory` is not defined', () => {
@@ -317,7 +323,8 @@ describe('@homecms/config', () => {
 					environment: 'mock-environment',
 					logger: 'mock-logger',
 					logLevel: 'mock-log-level',
-					port: 'mock-port'
+					port: 'mock-port',
+					theme: 'mock-theme'
 				};
 				td.when(requireFirst(), {ignoreExtraArgs: true}).thenReturn(configFile);
 			});
@@ -368,6 +375,12 @@ describe('@homecms/config', () => {
 				describe('.port', () => {
 					it('is set to the configured value', () => {
 						assert.strictEqual(config.port, 'mock-port');
+					});
+				});
+
+				describe('.theme', () => {
+					it('is set to the configured value', () => {
+						assert.strictEqual(config.theme, 'mock-theme');
 					});
 				});
 

@@ -1,0 +1,20 @@
+{
+  "name": "@homecms/themer",
+  "version": "0.0.0",
+  "description": "Theme management for Home CMS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/homecms/homecms.git",
+    "directory": "packages/themer"
+  },
+  "homepage": "https://github.com/homecms/homecms/tree/main/packages/themer",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x"
+  },
+  "main": "lib",
+  "devDependencies": {
+    "@homecms/logger": "^0.1.1"
+  }
+}

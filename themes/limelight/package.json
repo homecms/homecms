@@ -1,0 +1,17 @@
+{
+  "name": "@homecms/theme-limelight",
+  "version": "0.0.0",
+  "description": "The default theme for Home CMS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/homecms/homecms.git",
+    "directory": "themes/limelight"
+  },
+  "homepage": "https://github.com/homecms/homecms/tree/main/themes/limelight",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x",
+    "homecms": "0.x"
+  }
+}

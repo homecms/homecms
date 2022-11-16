@@ -8,10 +8,10 @@ const {getPagesRouter} = require('../routes/pages');
 const {default: helmet} = require('helmet');
 const {Liquid} = require('liquidjs');
 const notFound = require('@rowanmanning/not-found');
-const path = require('node:path');
 const {promisify} = require('node:util');
 const {redirectToHTTPS} = require('express-http-to-https');
 const renderErrorPage = require('@rowanmanning/render-error-page');
+const {ThemeManager} = require('@homecms/themer');
 
 /**
  * @typedef {object} ServerConfig
@@ -19,6 +19,7 @@ const renderErrorPage = require('@rowanmanning/render-error-page');
  * @property {'ci' | 'development' | 'production'} environment - Environment the CMS will run on.
  * @property {import('@homecms/logger').Logger} logger - The logger to use.
  * @property {number} port - HTTP port that the CMS will run on.
+ * @property {string} theme - HTTP theme that the CMS will use.
  */
 
 /**
@@ -77,15 +78,26 @@ exports.Server = class Server {
 	#viewEngine;
 
 	/**
+	 * @type {string}
+	 */
+	#theme;
+
+	/**
+	 * @type {ThemeManager}
+	 */
+	#themeManager;
+
+	/**
 	 * Server constructor.
 	 *
 	 * @param {ServerConfig & import('@homecms/data').DataStoreConfig} config - The server configuration.
 	 */
-	constructor({baseURL, databaseURL, environment, logger, port}) {
+	constructor({baseURL, databaseURL, environment, logger, port, theme}) {
 		this.#baseURL = baseURL;
 		this.#environment = environment;
 		this.#log = logger;
 		this.#port = port;
+		this.#theme = theme;
 
 		// Initialise the data store
 		this.#dataStore = new DataStore({
@@ -115,19 +127,23 @@ exports.Server = class Server {
 		// Set up default view data
 		app.locals.language = 'en';
 
-		// Get the view paths
-		const defaultViewPath = path.resolve(__dirname, '..', 'views');
-		// TODO base this on the configured theme
-		const themeViewPath = path.join(process.cwd(), 'views');
+		// Get theme details
+		this.#themeManager = new ThemeManager({
+			themeNames: [
+				this.#theme,
+				'@homecms/theme-base'
+			],
+			logger: this.#log
+		});
 
 		// Set up the view engine
+		const themeViewPaths = this.#themeManager.themes.map(({viewPath}) => viewPath);
 		this.#viewEngine = new Liquid({
 			cache: this.#environment === 'production',
-			extname: '.liquid',
-			root: [themeViewPath, defaultViewPath]
+			extname: '.liquid'
 		});
 		app.engine('liquid', this.#viewEngine.express());
-		app.set('views', [themeViewPath, defaultViewPath]);
+		app.set('views', themeViewPaths);
 		app.set('view engine', 'liquid');
 
 		// Set up pre-route middleware

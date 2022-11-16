@@ -3,5 +3,8 @@
   "packages/config": "0.2.0",
   "packages/data": "0.1.1",
   "packages/logger": "0.1.1",
-  "packages/server": "0.2.0"
+  "packages/server": "0.2.0",
+  "packages/themer": "0.0.0",
+  "themes/base": "0.0.0",
+  "themes/limelight": "0.0.0"
 }
