@@ -6,24 +6,21 @@ Home CMS is a simple content management system for publishing an [IndieWeb](http
 > **Warning**
 > This software isn't ready for use by anyone yet. It's pre-alpha, and you shouldn't be running it anywhere. This README will fill out later.
 
-## Table of Contents
 
-  * [Requirements](#requirements)
-  * [Contributing](#contributing)
-  * [License](#license)
+## Using Home CMS
 
+If you want to use Home CMS to build a website, we provide some technical documentation here to get you set up:
 
-## Requirements
-
-This application requires the following to run:
-
-  * [Node.js](https://nodejs.org/) v18.0.0+
-  * [PostgreSQL](https://www.postgresql.org/) v14.5+
+  * **[🚧 Getting started guide](docs/usage/getting-started.md):** explains how to start using Home CMS to manage your own website
 
 
 ## Contributing
 
-[The contributing guide is available here](docs/contributing.md). All contributors must follow [this library's code of conduct](docs/code_of_conduct.md).
+If you want contribute to Home CMS, whether that's working on the core or publishing your own themes, the guides you need are here. Before you start, review the [contributing guide](docs/contributing.md) and the [code of conduct](docs/code_of_conduct.md).
+
+  * **[🏗 Local development guide](docs/contributing/local-development.md):** explains how to get set up for contributing to Home CMS
+
+  * **[💻 Code contributing guide](docs/contributing/code.md):** talks through code quality expectations and the way the code in the repo is managed
 
 
 ## License
