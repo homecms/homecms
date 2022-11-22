@@ -9,6 +9,8 @@ This guide explains how to configure Home CMS to work best for you.
   * [Where configurations live](#where-configurations-live)
   * [File format](#file-format)
   * [`config.baseURL`](#configbaseurl)
+  * [`config.emailConnectionURL`](#configemailconnectionurl)
+  * [`config.emailFromAddress`](#configemailfromaddress)
   * [`config.environment`](#configenvironment)
   * [`config.databaseURL`](#configdatabaseurl)
   * [`config.logLevel`](#configloglevel)
@@ -51,6 +53,20 @@ module.exports = {
 `String`. The base URL where requests will go to, used to provide absolute URLs in the application.
 
 This defaults to `http://localhost:<port>/` where `<port>` is the value of the [`port` configuration](#configport).
+
+
+## `config.emailConnectionURL`
+
+`String` or `false`. The SMTP email connection URL used to send system emails. [See the nodemailer docs](https://nodemailer.com/smtp/) for the SMTP URL format.
+
+This defaults to the `EMAIL_CONNECTION_URL` environment variable or `false` if it's not set, which means that we fall back to the local `sendmail` command. This may result in emails getting caught in spam.
+
+
+## `config.emailFromAddress`
+
+`String`. The "From" address that emails from the system will be sent from.
+
+This defaults to the `EMAIL_FROM_ADDRESS` environment variable, or `"system@homecms"` if it's not set.
 
 
 ## `config.environment`
