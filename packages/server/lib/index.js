@@ -1,5 +1,6 @@
 'use strict';
 
+const {createMailer} = require('@homecms/mailer');
 const {createServer} = require('node:http');
 const {DataStore} = require('@homecms/data');
 const express = require('express');
@@ -68,6 +69,11 @@ exports.Server = class Server {
 	#log;
 
 	/**
+	 * @type {import('@homecms/mailer').Mailer}
+	 */
+	#mailer;
+
+	/**
 	 * @type {number}
 	 */
 	#port;
@@ -90,9 +96,18 @@ exports.Server = class Server {
 	/**
 	 * Server constructor.
 	 *
-	 * @param {ServerConfig & import('@homecms/data').DataStoreConfig} config - The server configuration.
+	 * @param {ServerConfig & import('@homecms/data').DataStoreConfig & import('@homecms/mailer').MailerConfig} config - The server configuration.
 	 */
-	constructor({baseURL, databaseURL, environment, logger, port, theme}) {
+	constructor({
+		baseURL,
+		databaseURL,
+		emailConnectionURL,
+		emailFromAddress,
+		environment,
+		logger,
+		port,
+		theme
+	}) {
 		this.#baseURL = baseURL;
 		this.#environment = environment;
 		this.#log = logger;
@@ -103,6 +118,12 @@ exports.Server = class Server {
 		this.#dataStore = new DataStore({
 			databaseURL,
 			logger
+		});
+
+		// Initialise the mailer
+		this.#mailer = createMailer({
+			emailConnectionURL,
+			emailFromAddress
 		});
 
 		// Create the app and server
@@ -179,6 +200,15 @@ exports.Server = class Server {
 	 */
 	get environment() {
 		return this.#environment;
+	}
+
+	/**
+	 * Get the mailer for the server.
+	 *
+	 * @returns {import('@homecms/mailer').Mailer} - Returns the mailer.
+	 */
+	get mailer() {
+		return this.#mailer;
 	}
 
 	/**

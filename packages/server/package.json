@@ -16,6 +16,7 @@
   "main": "lib",
   "dependencies": {
     "@homecms/data": "^0.1.1",
+    "@homecms/mailer": "^0.0.0",
     "@homecms/theme-base": "^0.1.0",
     "@homecms/theme-limelight": "^0.1.0",
     "@homecms/themer": "^0.1.0",

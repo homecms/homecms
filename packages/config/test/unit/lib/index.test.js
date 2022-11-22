@@ -23,6 +23,8 @@ describe('@homecms/config', () => {
 		process.env = {
 			CI: undefined,
 			DATABASE_URL: undefined,
+			EMAIL_CONNECTION_URL: undefined,
+			EMAIL_FROM_ADDRESS: undefined,
 			LOG_LEVEL: undefined,
 			NODE_ENV: undefined,
 			PORT: undefined
@@ -80,6 +82,18 @@ describe('@homecms/config', () => {
 			describe('.databaseURL', () => {
 				it('is set to a default PostgreSQL connection string', () => {
 					assert.strictEqual(config.databaseURL, 'postgresql://localhost/homecms');
+				});
+			});
+
+			describe('.emailConnectionURL', () => {
+				it('is set to `false`', () => {
+					assert.strictEqual(config.emailConnectionURL, false);
+				});
+			});
+
+			describe('.emailFromAddress', () => {
+				it('is set to a default email address', () => {
+					assert.strictEqual(config.emailFromAddress, 'system@homecms');
 				});
 			});
 
@@ -150,6 +164,36 @@ describe('@homecms/config', () => {
 				describe('.databaseURL', () => {
 					it('is set to the value of the environment variable', () => {
 						assert.strictEqual(config.databaseURL, 'mock-database-url');
+					});
+				});
+
+			});
+
+			describe('with an `EMAIL_CONNECTION_URL` environment variable', () => {
+
+				beforeEach(() => {
+					process.env.EMAIL_CONNECTION_URL = 'mock-email-connection-url';
+					config = loadConfig('/mock-base-directory');
+				});
+
+				describe('.emailConnectionURL', () => {
+					it('is set to the value of the environment variable', () => {
+						assert.strictEqual(config.emailConnectionURL, 'mock-email-connection-url');
+					});
+				});
+
+			});
+
+			describe('with an `EMAIL_FROM_ADDRESS` environment variable', () => {
+
+				beforeEach(() => {
+					process.env.EMAIL_FROM_ADDRESS = 'mock-email-from-address';
+					config = loadConfig('/mock-base-directory');
+				});
+
+				describe('.emailFromAddress', () => {
+					it('is set to the value of the environment variable', () => {
+						assert.strictEqual(config.emailFromAddress, 'mock-email-from-address');
 					});
 				});
 
@@ -320,6 +364,8 @@ describe('@homecms/config', () => {
 				configFile = {
 					baseURL: 'mock-base-url',
 					databaseURL: 'mock-database-url',
+					emailConnectionURL: 'mock-email-connection-url',
+					emailFromAddress: 'mock-email-from-address',
 					environment: 'mock-environment',
 					logger: 'mock-logger',
 					logLevel: 'mock-log-level',
@@ -351,6 +397,18 @@ describe('@homecms/config', () => {
 				describe('.databaseURL', () => {
 					it('is set to the configured value', () => {
 						assert.strictEqual(config.databaseURL, 'mock-database-url');
+					});
+				});
+
+				describe('.emailConnectionURL', () => {
+					it('is set to the configured value', () => {
+						assert.strictEqual(config.emailConnectionURL, 'mock-email-connection-url');
+					});
+				});
+
+				describe('.emailFromAddress', () => {
+					it('is set to the configured value', () => {
+						assert.strictEqual(config.emailFromAddress, 'mock-email-from-address');
 					});
 				});
 

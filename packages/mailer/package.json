@@ -1,0 +1,20 @@
+{
+  "name": "@homecms/mailer",
+  "version": "0.0.0",
+  "description": "A library for sending system emails from Home CMS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/homecms/homecms.git",
+    "directory": "packages/mailer"
+  },
+  "homepage": "https://github.com/homecms/homecms/tree/main/packages/mailer",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x"
+  },
+  "main": "lib",
+  "dependencies": {
+    "nodemailer": "^6.8.0"
+  }
+}

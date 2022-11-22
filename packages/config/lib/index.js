@@ -11,8 +11,10 @@ const requireFirst = require('@rowanmanning/require-first');
 /**
  * @typedef {object} Config
  * @property {string} [baseURL] - The base URL for the app where requests to the home page should be routed. Defaults to localhost with the `port` configuration.
- * @property {Environment} [environment] - The environment the CMS is running in. Defaults to the `NODE_ENV` environment variable.
  * @property {string} [databaseURL] - The PostgreSQL database connection string. Defaults to the `DATABASE_URL` environment variable or "postgresql://localhost/homecms-dev".
+ * @property {string | false} [emailConnectionURL] - Email connection details. Defaults to `false` which will fall back to the `sendmail` command.
+ * @property {string} [emailFromAddress] - The email address system emails will be sent from.
+ * @property {Environment} [environment] - The environment the CMS is running in. Defaults to the `NODE_ENV` environment variable.
  * @property {string} [logLevel] - The level to output logs at. Defaults to the `LOG_LEVEL` environment variable or "info".
  * @property {number} [port] - The HTTP port the CMS will run on. Defaults to the `PORT` environment variable.
  * @property {string} [theme] - The theme the CMS will use. Defaults to "@homecms/theme-limelight".
@@ -21,8 +23,10 @@ const requireFirst = require('@rowanmanning/require-first');
 /**
  * @typedef {object} DefaultedConfig
  * @property {string} baseURL - The base URL for the app.
- * @property {Environment} environment - The environment.
  * @property {string} databaseURL - The PostgreSQL database connection string.
+ * @property {string | false} emailConnectionURL - Email connection details.
+ * @property {string} emailFromAddress - The email address system emails will be sent from.
+ * @property {Environment} environment - The environment.
  * @property {import('@homecms/logger').Logger} logger - The app logger.
  * @property {string} logLevel - The level to output logs at.
  * @property {number} port - The HTTP port the CMS will run on.
@@ -64,6 +68,8 @@ exports.loadConfig = function loadConfig(baseDirectory = process.cwd()) {
 	 */
 	const config = Object.assign({
 		databaseURL: process.env.DATABASE_URL || 'postgresql://localhost/homecms',
+		emailConnectionURL: process.env.EMAIL_CONNECTION_URL || false,
+		emailFromAddress: process.env.EMAIL_FROM_ADDRESS || 'system@homecms',
 		environment: defaultEnvironment,
 		logLevel: process.env.LOG_LEVEL || 'info',
 		port: process.env.PORT ? Number(process.env.PORT) : 3000,
