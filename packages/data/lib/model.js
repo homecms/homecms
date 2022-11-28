@@ -103,7 +103,7 @@ exports.Model = class Model {
 	 */
 	async insertOne(data) {
 		const inserted = await this.insertMany([data]);
-		return inserted[0] || null;
+		return inserted?.[0] || null;
 	}
 
 	/**

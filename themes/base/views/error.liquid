@@ -7,11 +7,13 @@
 
 {% block content %}
 
-	<h1>Error {{ error.statusCode }}</h1>
-	<p>{{ error.message }}</p>
+	<main>
+		<h1>Error {{ error.statusCode }}</h1>
+		<p>{{ error.message }}</p>
 
-	{% if error.stack %}
-		<pre>{{ error.stack }}</pre>
-	{% endif %}
+		{% if error.stack %}
+			<pre>{{ error.stack }}</pre>
+		{% endif %}
+	</main>
 
 {% endblock %}

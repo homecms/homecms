@@ -36,7 +36,7 @@ exports.seed = async db => {
 			status: 'draft',
 			dateCreated: new Date(baseDate + 2_000),
 			title: 'Untitled Page',
-			raw: '<p>TODO write this.</p>'
+			raw: '<p>To-do write this.</p>'
 		},
 		{
 			pageId,

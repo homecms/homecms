@@ -54,7 +54,7 @@ exports.Theme = class Theme {
 			if (typeof homecmsVersionSupport !== 'string') {
 				throw new Error(`Theme manifest "${themeName}/package.json" does not have an "engines.homecms" property`);
 			}
-			// TODO check if the version range is satisfied
+			// TODO task: check if the version range is satisfied
 
 			// Add some metadata
 			this.#meta.version = themeManifest.version;

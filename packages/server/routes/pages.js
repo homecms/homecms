@@ -1,5 +1,6 @@
 'use strict';
 
+const {Gone: GoneError} = require('http-errors');
 const {Router: createRouter} = require('express');
 
 /**
@@ -11,6 +12,11 @@ const {Router: createRouter} = require('express');
 exports.getPagesRouter = function getPagesRouter(server) {
 	const {models} = server;
 	const router = createRouter();
+
+	server.log.debug({
+		event: 'ROUTES_INITIALIZED',
+		message: 'Page routes initialized'
+	});
 
 	// Declare the main pages route
 	router.get(/.*/, async (request, response, next) => {
@@ -40,16 +46,13 @@ exports.getPagesRouter = function getPagesRouter(server) {
 
 			// If there's no content, we have an unpublished page
 			if (!content) {
-				// TODO if there's a valid draft key in the request then don't do this?
+				// TODO task: if there's a valid draft key in the request then don't do this?
 				return next();
 			}
 
 			// If the content is unpublished, we have a deleted page
 			if (content.status === 'unpublished') {
-				// TODO send an actual HTTP error here instead
-				throw Object.assign(new Error('Gone'), {
-					statusCode: 410
-				});
+				throw new GoneError();
 			}
 
 			// Output the content

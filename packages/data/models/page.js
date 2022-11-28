@@ -30,15 +30,15 @@ const schema = {
 		},
 		dateCreated: {
 			type: 'string',
-			format: 'date-time' // TODO this is probably wrong
+			format: 'date-time' // TODO warning: this is probably wrong
 		},
 		dateLastModified: {
 			type: 'string',
-			format: 'date-time' // TODO this is probably wrong
+			format: 'date-time' // TODO warning: this is probably wrong
 		},
 		dateFirstPublished: {
 			type: 'string',
-			format: 'date-time' // TODO this is probably wrong
+			format: 'date-time' // TODO warning: this is probably wrong
 		},
 		title: {
 			type: 'string',

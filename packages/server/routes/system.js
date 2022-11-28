@@ -11,9 +11,14 @@ const {Router: createRouter} = require('express');
 exports.getSystemRouter = function getSystemRouter(server) {
 	const router = createRouter();
 
-	router.get('/__system/health', (request, response) => {
+	server.log.debug({
+		event: 'ROUTES_INITIALIZED',
+		message: 'System routes initialized'
+	});
+
+	router.get('/health', (request, response) => {
 		response.status(200).send({
-			environment: server.environment
+			ok: true
 		});
 	});
 

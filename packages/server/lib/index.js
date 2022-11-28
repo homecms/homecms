@@ -4,14 +4,17 @@ const {createMailer} = require('@homecms/mailer');
 const {createServer} = require('node:http');
 const {DataStore} = require('@homecms/data');
 const express = require('express');
-const {getSystemRouter} = require('../routes/system');
+const {getAdminRouter} = require('../routes/admin');
 const {getPagesRouter} = require('../routes/pages');
+const {getSystemRouter} = require('../routes/system');
 const {default: helmet} = require('helmet');
 const {Liquid} = require('liquidjs');
 const notFound = require('@rowanmanning/not-found');
 const {promisify} = require('node:util');
 const {redirectToHTTPS} = require('express-http-to-https');
 const renderErrorPage = require('@rowanmanning/render-error-page');
+const session = require('express-session');
+const SessionStore = require('connect-session-knex')(session);
 const {ThemeManager} = require('@homecms/themer');
 
 /**
@@ -20,6 +23,7 @@ const {ThemeManager} = require('@homecms/themer');
  * @property {'ci' | 'development' | 'production'} environment - Environment the CMS will run on.
  * @property {import('@homecms/logger').Logger} logger - The logger to use.
  * @property {number} port - HTTP port that the CMS will run on.
+ * @property {string} sessionSecret - The secret to encrypt session data with.
  * @property {string} theme - HTTP theme that the CMS will use.
  */
 
@@ -94,6 +98,11 @@ exports.Server = class Server {
 	#themeManager;
 
 	/**
+	 * @type {Object<string, import('express').Handler>}
+	 */
+	#middleware;
+
+	/**
 	 * Server constructor.
 	 *
 	 * @param {ServerConfig & import('@homecms/data').DataStoreConfig & import('@homecms/mailer').MailerConfig} config - The server configuration.
@@ -106,6 +115,7 @@ exports.Server = class Server {
 		environment,
 		logger,
 		port,
+		sessionSecret,
 		theme
 	}) {
 		this.#baseURL = baseURL;
@@ -125,6 +135,28 @@ exports.Server = class Server {
 			emailConnectionURL,
 			emailFromAddress
 		});
+
+		// Initalise reusable middleware
+		this.#middleware = {
+
+			// TODO question: should this live in a different package?
+			// It's tightly coupled to the data module
+			session: session({
+				cookie: {
+					maxAge: 7 * 24 * 60 * 60 * 1_000 // One week
+				},
+				name: 'HomeCMS.session',
+				resave: false,
+				rolling: true,
+				saveUninitialized: false,
+				secret: sessionSecret,
+				store: new SessionStore({
+					createtable: false,
+					knex: this.#dataStore.knex,
+					sidfieldname: 'id'
+				})
+			})
+		};
 
 		// Create the app and server
 		const app = this.#app = express();
@@ -178,7 +210,11 @@ exports.Server = class Server {
 		app.use(notFound());
 		app.use((error, request, response, next) => {
 			if (!error.status || error.status !== 404) {
-				this.#log.error(error);
+				if (error.status < 500) {
+					this.#log.warn(error);
+				} else {
+					this.#log.error(error);
+				}
 			}
 			next(error);
 		});
@@ -189,8 +225,18 @@ exports.Server = class Server {
 	 * Initialise the app routes.
 	 */
 	#initialiseRoutes() {
-		this.#app.use(getSystemRouter(this));
+		this.#app.use('/__system', getSystemRouter(this));
+		this.#app.use('/__admin', getAdminRouter(this));
 		this.#app.use(getPagesRouter(this));
+	}
+
+	/**
+	 * Get the server's base URL.
+	 *
+	 * @returns {string} - Returns the base URL.
+	 */
+	get baseURL() {
+		return this.#baseURL;
 	}
 
 	/**
@@ -200,6 +246,15 @@ exports.Server = class Server {
 	 */
 	get environment() {
 		return this.#environment;
+	}
+
+	/**
+	 * Get the server logger.
+	 *
+	 * @returns {import('@homecms/logger').Logger} - Returns the server logger.
+	 */
+	get log() {
+		return this.#log;
 	}
 
 	/**
@@ -218,6 +273,15 @@ exports.Server = class Server {
 	 */
 	get models() {
 		return this.#dataStore.models;
+	}
+
+	/**
+	 * Get the server session middleware.
+	 *
+	 * @returns {import('express').Handler} - Returns the session middleware.
+	 */
+	get sessionMiddleware() {
+		return this.#middleware.session;
 	}
 
 	/**

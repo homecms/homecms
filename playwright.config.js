@@ -63,7 +63,6 @@ module.exports = {
 	projects: [
 
 		// Chromium desktop - all we need for now.
-		// TODO: add more browsers in nightly tests via environment variables
 		{
 			name: 'chromium',
 			use: {

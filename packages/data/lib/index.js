@@ -5,6 +5,7 @@ const {knex, Knex} = require('knex');
 const LRU = require('lru-cache');
 const {PageModel} = require('../models/page');
 const path = require('node:path');
+const {UserModel} = require('../models/user');
 
 /**
  * @typedef {object} DataStoreConfig
@@ -16,6 +17,7 @@ const path = require('node:path');
  * @typedef {object} DataModels
  * @property {ContentModel} content - Content model functions.
  * @property {PageModel} page - Page model functions.
+ * @property {UserModel} user - User model functions.
  */
 
 const MIGRATION_DIRECTORY = path.resolve(__dirname, '..', 'migrations');
@@ -46,7 +48,8 @@ exports.DataStore = class DataStore {
 	 */
 	models = {
 		content: new ContentModel({dataStore: this}),
-		page: new PageModel({dataStore: this})
+		page: new PageModel({dataStore: this}),
+		user: new UserModel({dataStore: this})
 	};
 
 	/**
@@ -76,15 +79,15 @@ exports.DataStore = class DataStore {
 
 		// Set up an in-memory cache
 		this.cache = new LRU({
-			max: 1000 // TODO make this configurable
-			// TODO also set max size and the calculation
+			max: 1000 // TODO task: make this configurable
+			// TODO task: also set max size and the calculation
 		});
 
 		// Set up a Knex database
 		this.knex = knex({
 			client: 'pg',
 			connection: databaseURL,
-			searchPath: ['homecms', 'public'], // TODO do we need this?
+			searchPath: ['homecms', 'public'], // TODO question: do we need this?
 			acquireConnectionTimeout: 30 * 1000, // 30 seconds
 			pool: {
 				afterCreate: (_, done) => {

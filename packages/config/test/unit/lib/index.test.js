@@ -5,6 +5,9 @@ const td = require('testdouble');
 
 describe('@homecms/config', () => {
 	let createLogger;
+	let crypto;
+	let dotenv;
+	let randomByteBuffer;
 	let loadConfig;
 	let mockLogger;
 	let originalEnv;
@@ -16,8 +19,21 @@ describe('@homecms/config', () => {
 		createLogger = require('@homecms/logger').createLogger;
 		td.when(createLogger(), {ignoreExtraArgs: true}).thenReturn(mockLogger);
 
+		td.replace('dotenv', {config: td.func()});
+		dotenv = require('dotenv');
+
 		td.replace('@rowanmanning/require-first', td.func());
 		requireFirst = require('@rowanmanning/require-first');
+
+		td.replace('node:crypto', {
+			randomBytes: td.func()
+		});
+		crypto = require('node:crypto');
+		randomByteBuffer = {
+			toString: td.func()
+		};
+		td.when(crypto.randomBytes(24)).thenReturn(randomByteBuffer);
+		td.when(randomByteBuffer.toString('hex')).thenReturn('mock-random-hex');
 
 		originalEnv = process.env;
 		process.env = {
@@ -27,7 +43,8 @@ describe('@homecms/config', () => {
 			EMAIL_FROM_ADDRESS: undefined,
 			LOG_LEVEL: undefined,
 			NODE_ENV: undefined,
-			PORT: undefined
+			PORT: undefined,
+			SESSION_SECRET: undefined
 		};
 
 		loadConfig = require('../../..').loadConfig;
@@ -35,6 +52,10 @@ describe('@homecms/config', () => {
 
 	afterEach(() => {
 		process.env = originalEnv;
+	});
+
+	it('loads environment variables from an `.env` file', () => {
+		td.verify(dotenv.config(), {times: 1});
 	});
 
 	describe('.createLogger(baseDirectory)', () => {
@@ -118,6 +139,12 @@ describe('@homecms/config', () => {
 			describe('.port', () => {
 				it('is set to a default port', () => {
 					assert.strictEqual(config.port, 3000);
+				});
+			});
+
+			describe('.sessionSecret', () => {
+				it('is set to a random hex string', () => {
+					assert.strictEqual(config.sessionSecret, 'mock-random-hex');
 				});
 			});
 
@@ -355,6 +382,21 @@ describe('@homecms/config', () => {
 
 			});
 
+			describe('with a `SESSION_SECRET` environment variable', () => {
+
+				beforeEach(() => {
+					process.env.SESSION_SECRET = 'mock-session-secret';
+					config = loadConfig('/mock-base-directory');
+				});
+
+				describe('.sessionSecret', () => {
+					it('is set to the value of the environment variable', () => {
+						assert.strictEqual(config.sessionSecret, 'mock-session-secret');
+					});
+				});
+
+			});
+
 		});
 
 		describe('with a config file', () => {
@@ -370,6 +412,7 @@ describe('@homecms/config', () => {
 					logger: 'mock-logger',
 					logLevel: 'mock-log-level',
 					port: 'mock-port',
+					sessionSecret: 'mock-session-secret',
 					theme: 'mock-theme'
 				};
 				td.when(requireFirst(), {ignoreExtraArgs: true}).thenReturn(configFile);
@@ -433,6 +476,12 @@ describe('@homecms/config', () => {
 				describe('.port', () => {
 					it('is set to the configured value', () => {
 						assert.strictEqual(config.port, 'mock-port');
+					});
+				});
+
+				describe('.sessionSecret', () => {
+					it('is set to the configured value', () => {
+						assert.strictEqual(config.sessionSecret, 'mock-session-secret');
 					});
 				});
 

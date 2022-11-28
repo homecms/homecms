@@ -16,4 +16,13 @@ test.describe('pages: /draft', () => {
 		expect(response.headers()).toHaveProperty('content-type', 'text/html; charset=utf-8');
 	});
 
+	test('has a title and expected content', async ({page}) => {
+		await expect(page).toHaveTitle('Error 404: Not Found');
+
+		const main = page.getByRole('main');
+		const heading = main.getByRole('heading');
+
+		await expect(heading).toHaveText('Error 404');
+	});
+
 });

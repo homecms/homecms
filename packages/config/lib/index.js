@@ -1,7 +1,9 @@
 'use strict';
 
 const {createLogger} = require('@homecms/logger');
+const dotenv = require('dotenv');
 const path = require('node:path');
+const {randomBytes} = require('node:crypto');
 const requireFirst = require('@rowanmanning/require-first');
 
 /**
@@ -17,6 +19,7 @@ const requireFirst = require('@rowanmanning/require-first');
  * @property {Environment} [environment] - The environment the CMS is running in. Defaults to the `NODE_ENV` environment variable.
  * @property {string} [logLevel] - The level to output logs at. Defaults to the `LOG_LEVEL` environment variable or "info".
  * @property {number} [port] - The HTTP port the CMS will run on. Defaults to the `PORT` environment variable.
+ * @property {string} [sessionSecret] - The secret to encrypt session data with. Defaults to the `SESSION_SECRET` environment variable or a random string.
  * @property {string} [theme] - The theme the CMS will use. Defaults to "@homecms/theme-limelight".
  */
 
@@ -30,8 +33,11 @@ const requireFirst = require('@rowanmanning/require-first');
  * @property {import('@homecms/logger').Logger} logger - The app logger.
  * @property {string} logLevel - The level to output logs at.
  * @property {number} port - The HTTP port the CMS will run on.
+ * @property {string} sessionSecret - The secret to encrypt session data with.
  * @property {string} theme - The theme the CMS will use.
  */
+
+dotenv.config();
 
 /**
  * @type {Array<string>}
@@ -73,6 +79,7 @@ exports.loadConfig = function loadConfig(baseDirectory = process.cwd()) {
 		environment: defaultEnvironment,
 		logLevel: process.env.LOG_LEVEL || 'info',
 		port: process.env.PORT ? Number(process.env.PORT) : 3000,
+		sessionSecret: process.env.SESSION_SECRET || randomBytes(24).toString('hex'),
 		theme: '@homecms/theme-limelight'
 	}, configFile);
 

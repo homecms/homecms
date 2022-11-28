@@ -33,6 +33,8 @@ homecms.json
 
 The default configurations for Home CMS aim to work in the majority of use cases, and so hopefully you shouldn't need to make too many changes. The rest of this guide assumes you're using JavaScript for configuration.
 
+If you want to manage your environment variables with [an `.env` file](https://github.com/motdotla/dotenv#dotenv) then Home CMS can do that - it'll automatically load a `.env` file found in the current working directory. If you're using this file please be sure not to commit it to your repository.
+
 
 ## File format
 

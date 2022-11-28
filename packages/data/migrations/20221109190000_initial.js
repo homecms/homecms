@@ -14,8 +14,8 @@ exports.up = async db => {
 
 		// Define identifying columns
 		table.uuid('id', {primaryKey: true}).defaultTo(db.raw('uuid_generate_v4()'));
-		table.string('path').notNullable();
-		table.uuid('parentId').nullable().defaultTo(null);
+		table.string('path').notNullable().unique();
+		table.uuid('parentId').nullable().defaultTo(null).references('pages.id');
 		table.enum('type', ['collection', 'single', 'special'], {
 			enumName: 'pageType',
 			useNative: false
@@ -25,10 +25,6 @@ exports.up = async db => {
 		table.timestamp('dateCreated').notNullable().defaultTo(db.fn.now());
 		table.timestamp('dateLastModified').notNullable().defaultTo(db.fn.now());
 		table.timestamp('dateFirstPublished').nullable();
-
-		// Define indexes and relationships
-		table.unique(['path']);
-		table.foreign('parentId').references('pages.id');
 	});
 
 	// Define the content table
@@ -36,22 +32,18 @@ exports.up = async db => {
 
 		// Define identifying columns
 		table.uuid('id', {primaryKey: true}).defaultTo(db.raw('uuid_generate_v4()'));
-		table.uuid('pageId').notNullable();
+		table.uuid('pageId').notNullable().references('pages.id');
 		table.enum('status', ['draft', 'published', 'unpublished'], {
 			enumName: 'contentStatus',
 			useNative: false
-		}).notNullable().defaultTo('draft');
+		}).notNullable().defaultTo('draft').index();
 
 		// Define date/time columns
-		table.timestamp('dateCreated').notNullable().defaultTo(db.fn.now());
+		table.timestamp('dateCreated').notNullable().defaultTo(db.fn.now()).index();
 
 		// Define the actual content columns
 		table.string('title').nullable();
 		table.text('raw').nullable();
-
-		// Define indexes and relationships
-		table.index(['status', 'dateCreated']);
-		table.foreign('pageId').references('pages.id');
 	});
 
 	// Define the settings table
@@ -59,11 +51,42 @@ exports.up = async db => {
 
 		// Define columns
 		table.uuid('id', {primaryKey: true}).defaultTo(db.raw('uuid_generate_v4()'));
-		table.string('key').notNullable();
+		table.string('key').notNullable().unique();
 		table.json('data').notNullable();
+	});
+
+	// Define the sessions table
+	await db.schema.createTable('sessions', table => {
+
+		// Define columns
+		table.string('id').notNullable().primary();
+		table.json('sess').notNullable();
+		table.timestamp('expired').notNullable().index();
+	});
+
+	// Define the users table
+	await db.schema.createTable('users', table => {
+
+		// Define identifying columns
+		table.uuid('id', {primaryKey: true}).defaultTo(db.raw('uuid_generate_v4()'));
+		table.string('email').notNullable();
+
+		// Define date/time columns
+		table.timestamp('dateCreated').notNullable().defaultTo(db.fn.now());
 
 		// Define indexes and relationships
-		table.unique(['key']);
+		table.unique(['email']);
+	});
+
+	// Define the login tokens table
+	await db.schema.createTable('userLoginTokens', table => {
+
+		// Define identifying columns
+		table.uuid('id', {primaryKey: true}).defaultTo(db.raw('uuid_generate_v4()'));
+		table.uuid('userId').notNullable().references('users.id');
+
+		// Define date/time columns
+		table.timestamp('expired').notNullable().index();
 	});
 
 };
@@ -73,6 +96,9 @@ exports.up = async db => {
  * @returns {Promise<void>} - Resolves when the migration is complete.
  */
 exports.down = async db => {
+	await db.schema.dropTable('userLoginTokens');
+	await db.schema.dropTable('users');
+	await db.schema.dropTable('sessions');
 	await db.schema.dropTable('settings');
 	await db.schema.dropTable('content');
 	await db.schema.dropTable('pages');
