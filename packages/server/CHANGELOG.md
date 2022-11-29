@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.2.2](https://github.com/homecms/homecms/compare/server-v0.2.1...server-v0.2.2) (2022-11-28)
+
+
+### Features
+
+* add a package for sending emails ([7a07f62](https://github.com/homecms/homecms/commit/7a07f62fb7be353ac9d78fbdf1ac485b650152ca))
+* add an admin page and basic login ([b25195f](https://github.com/homecms/homecms/commit/b25195fc5b2f292ad9ddf819ae04fabb901f208c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/data bumped from ^0.1.1 to ^0.1.2
+    * @homecms/theme-base bumped from ^0.1.0 to ^0.1.1
+    * @homecms/themer bumped from ^0.1.0 to ^0.1.1
+
 ## [0.2.1](https://github.com/homecms/homecms/compare/server-v0.2.0...server-v0.2.1) (2022-11-16)
 
 
