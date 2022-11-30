@@ -28,7 +28,7 @@
     "express-session": "^1.17.3",
     "helmet": "^6.0.0",
     "http-errors": "^2.0.0",
-    "liquidjs": "^9.42.1"
+    "liquidjs": "^10.1.0"
   },
   "devDependencies": {
     "@homecms/logger": "^0.1.1"
