@@ -6,14 +6,14 @@ This guide explains how to set up a new website powered by Home CMS. It assumes 
 ## Table of Contents
 
   * [Creating a new website](#creating-a-new-website)
-    * [Option 1: Github Template Repo](#option-1-github-template-repo)
+    * [Option 1: GitHub Template Repo](#option-1-github-template-repo)
   * [Configuration](#configuration)
   * [Testing your site locally](#testing-your-site-locally)
   * [Deployment](#deployment)
 
 ## Creating a new website
 
-### Option 1: Github Template Repo
+### Option 1: GitHub Template Repo
 
 We maintain a template repository for Home CMS which allows you to create your own site in a few clicks.
 
@@ -21,7 +21,7 @@ We maintain a template repository for Home CMS which allows you to create your o
 
   2. Click the "Use this template" button, or follow the [GitHub guide here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
 
-The new repository that you created is a ready-to-go Home CMS website. You can move onto the next parts of this guide: [configuring your site](#configuration) and [testing your site locally](#testing-your-site-locally)
+The new repository that you created is a ready-to-go Home CMS website. You can move on to the next parts of this guide: [configuring your site](#configuration) and [testing your site locally](#testing-your-site-locally)
 
 ## Configuration
 
