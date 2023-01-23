@@ -28,6 +28,17 @@ test.describe('pages: /__admin/login', () => {
 		const form = page.getByTestId('login-form');
 		expect(await form.getAttribute('action')).toBeNull();
 		await expect(form).toHaveAttribute('method', 'post');
+
+		const emailField = form.getByLabel('email');
+		await expect(emailField).toHaveAttribute('type', 'email');
+	});
+
+	test.describe('submitted login form', () => {
+
+		test('has tests', () => {
+			test.skip();
+		});
+
 	});
 
 });

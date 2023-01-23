@@ -5,7 +5,7 @@ const {Router: createRouter} = require('express');
 /**
  * Get a router for system routes.
  *
- * @param {import('../lib/index').Server} server - The server to add system routes to.
+ * @param {import('../../lib/index').Server} server - The server to add system routes to.
  * @returns {import('express').Router} - Returns the system router.
  */
 exports.getSystemRouter = function getSystemRouter(server) {

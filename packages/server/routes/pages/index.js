@@ -6,7 +6,7 @@ const {Router: createRouter} = require('express');
 /**
  * Get a router for page routes.
  *
- * @param {import('../lib/index').Server} server - The server to add page routes to.
+ * @param {import('../../lib/index').Server} server - The server to add page routes to.
  * @returns {import('express').Router} - Returns the page router.
  */
 exports.getPagesRouter = function getPagesRouter(server) {

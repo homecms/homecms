@@ -1,6 +1,5 @@
 'use strict';
 
-const {Unauthorized: UnauthorizedError} = require('http-errors');
 const {Router: createRouter, urlencoded} = require('express');
 
 /**
@@ -61,7 +60,7 @@ exports.getAdminRouter = function getAdminRouter(server) {
 				next(error);
 			}
 		})
-		.post(urlencoded(), async (request, response, next) => {
+		.post(urlencoded({extended: false}), async (request, response, next) => {
 			try {
 				const email = request.body.email;
 				const user = await models.user.findOneByEmail(email);
@@ -103,7 +102,7 @@ exports.getAdminRouter = function getAdminRouter(server) {
 	// Require authentication for further routes
 	router.use((request, response, next) => {
 		if (!response.locals.isAuthenticated) {
-			throw new UnauthorizedError();
+			return response.redirect(`${request.baseUrl}/login`);
 		}
 		next();
 	});

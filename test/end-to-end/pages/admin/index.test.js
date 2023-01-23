@@ -10,19 +10,13 @@ test.describe('pages: /__admin', () => {
 	});
 
 	test('it responds with the expected HTTP status and headers', async ({request}) => {
-		const response = await request.get(startUrl);
+		const response = await request.get(startUrl, {
+			maxRedirects: 0
+		});
 		expect(response.ok()).toBeFalsy();
-		expect(response.status()).toStrictEqual(401);
-		expect(response.headers()).toHaveProperty('content-type', 'text/html; charset=utf-8');
-	});
-
-	test('has a title and expected content', async ({page}) => {
-		await expect(page).toHaveTitle('Error 401: Unauthorized');
-
-		const main = page.getByRole('main');
-		const heading = main.getByRole('heading');
-
-		await expect(heading).toHaveText('Error 401');
+		expect(response.status()).toStrictEqual(302);
+		expect(response.headers()).toHaveProperty('content-type', 'text/plain; charset=utf-8');
+		expect(response.headers()).toHaveProperty('location', '/__admin/login');
 	});
 
 });
