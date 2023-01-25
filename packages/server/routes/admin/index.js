@@ -67,13 +67,18 @@ exports.getAdminRouter = function getAdminRouter(server) {
 				if (user) {
 					const token = await models.user.createLoginToken(user.id);
 					if (token) {
-						const loginPath = request.originalUrl.replace(/^\//, '');
-						const loginUrl = `${server.baseURL}${loginPath}?token=${token.id}`;
+						const loginUrl = `${server.baseURL}${request.originalUrl}?token=${token.id}`;
 						server.mailer
 							.sendMail({
 								to: user.email,
 								subject: 'Login',
 								text: `Follow the link to log in:\n${loginUrl}`
+							})
+							.then(() => {
+								server.log.debug({
+									event: 'LOGIN_EMAIL_SENT',
+									message: `Successfully sent login email to email: "${email}"`
+								});
 							})
 							.catch(error => {
 								server.log.error({
