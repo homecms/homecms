@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.2.0",
+    "@commitlint/config-conventional": "^17.4.2",
     "@rowanmanning/eslint-config": "^5.0.2",
     "@types/node": "^18.11.18",
     "chai": "^4.3.7",
