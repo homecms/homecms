@@ -1,30 +1,40 @@
 'use strict';
 
-const {test, expect} = require('@playwright/test');
+const {assert} = require('chai');
+const {browser, http} = require('../helpers/suite');
 
-test.describe('pages: /published', () => {
-	const startUrl = '/published';
+describe('pages: /published', () => {
 
-	test.beforeEach(async ({page}) => {
-		await page.goto(startUrl);
+	/** @type {import('puppeteer').Page} */
+	let page;
+
+	/** @type {Response} */
+	let response;
+
+	before(async () => {
+		response = await http.get('/published');
+		page = await browser.browse('/published');
 	});
 
-	test('it responds with the expected HTTP status and headers', async ({request}) => {
-		const response = await request.get(startUrl);
-		expect(response.ok()).toBeTruthy();
-		expect(response.status()).toStrictEqual(200);
-		expect(response.headers()).toHaveProperty('content-type', 'text/html; charset=utf-8');
+	after(async () => {
+		await page.close();
 	});
 
-	test('has a title and expected content', async ({page}) => {
-		await expect(page).toHaveTitle('Published Page');
+	it('responds with the expected HTTP status and headers', async () => {
+		assert.isTrue(response.ok);
+		assert.strictEqual(response.status, 200);
+		assert.strictEqual(response.headers.get('content-type'), 'text/html; charset=utf-8');
+	});
 
-		const main = page.getByRole('main');
-		const heading = main.getByRole('heading');
-		const paragraph = main.getByRole('paragraph');
+	it('has a title and expected content', async () => {
+		const title = await page.$('html > head > title');
+		const main = await page.$('main');
+		const heading = await main.$('h1');
+		const firstParagraph = await main.$('p');
 
-		await expect(heading).toHaveText('Published Page');
-		await expect(paragraph).toHaveText('Test published page');
+		assert.strictEqual(await browser.getText(title), 'Published Page');
+		assert.strictEqual(await browser.getText(heading), 'Published Page');
+		assert.strictEqual(await browser.getText(firstParagraph), 'Test published page');
 	});
 
 });

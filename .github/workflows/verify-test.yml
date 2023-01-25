@@ -158,20 +158,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-
       - name: Run end-to-end tests
         run: npm run test:end-to-end
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
-
-      - name: Upload playwright reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: playwright-report
-          path: |
-            test/output/playwright-html
-            test/output/playwright-results
-          retention-days: 5

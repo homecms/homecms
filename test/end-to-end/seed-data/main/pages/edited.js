@@ -41,7 +41,7 @@ exports.seed = async db => {
 		},
 		{
 			pageId,
-			status: 'draft',
+			status: 'published',
 			dateCreated: new Date(baseDate + 4_000),
 			title: 'Edited Page',
 			raw: '<p>Test edited page</p>'

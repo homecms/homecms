@@ -85,7 +85,7 @@ exports.loadConfig = function loadConfig(baseDirectory = process.cwd()) {
 
 	// Set a default base URL
 	if (!config.baseURL) {
-		config.baseURL = `http://localhost:${config.port}/`;
+		config.baseURL = `http://localhost:${config.port}`;
 	}
 
 	// Create a logger to add to the final config
