@@ -166,7 +166,19 @@ describe('pages: /__admin/login', () => {
 
 	describe('when an invalid login token is provided', () => {
 
-		it('has tests');
+		before(async () => {
+			await database.purgeLogins();
+			await page.goto(browser.resolveURL('/__admin/login?token=invalid-token'));
+		});
+
+		it('does not redirect', async () => {
+			assert.strictEqual(page.url(), browser.resolveURL('/__admin/login?token=invalid-token'));
+		});
+
+		it('does not create a session', async () => {
+			const sessions = await db.select('*').from('sessions');
+			assert.lengthOf(sessions, 0);
+		});
 
 	});
 
