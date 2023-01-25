@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.2](https://github.com/homecms/homecms/compare/config-v0.2.1...config-v0.2.2) (2023-01-25)
+
+
+### Features
+
+* add a package for sending emails ([7a07f62](https://github.com/homecms/homecms/commit/7a07f62fb7be353ac9d78fbdf1ac485b650152ca))
+* add an admin page and basic login ([b25195f](https://github.com/homecms/homecms/commit/b25195fc5b2f292ad9ddf819ae04fabb901f208c))
+
+
+### Documentation Changes
+
+* make a start on the getting started guide ([f04f3fd](https://github.com/homecms/homecms/commit/f04f3fdad71b0c50d787bd7d0ded9205829b33f0))
+
 ## [0.2.1](https://github.com/homecms/homecms/compare/config-v0.2.0...config-v0.2.1) (2022-11-16)
 
 
