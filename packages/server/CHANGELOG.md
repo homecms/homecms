@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.2.2](https://github.com/homecms/homecms/compare/server-v0.2.1...server-v0.2.2) (2023-01-25)
+
+
+### Features
+
+* add a package for sending emails ([7a07f62](https://github.com/homecms/homecms/commit/7a07f62fb7be353ac9d78fbdf1ac485b650152ca))
+* add an admin page and basic login ([b25195f](https://github.com/homecms/homecms/commit/b25195fc5b2f292ad9ddf819ae04fabb901f208c))
+
+
+### Bug Fixes
+
+* bump helmet from 6.0.0 to 6.0.1 ([791ec58](https://github.com/homecms/homecms/commit/791ec581f1b9a6cc29d79493dbda9caf2ab0d6b1))
+* bump liquidjs from 9.42.1 to 10.4.0 ([e4bd1d7](https://github.com/homecms/homecms/commit/e4bd1d75e294ad047d312a0b5119da5930817c14))
+* correct the URL in the login emails ([3ec7230](https://github.com/homecms/homecms/commit/3ec7230bf897cc61a64ca6447f32e8508cfefe83))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/data bumped from ^0.1.1 to ^0.1.2
+    * @homecms/theme-base bumped from ^0.1.0 to ^0.1.1
+    * @homecms/themer bumped from ^0.1.0 to ^0.1.1
+
 ## [0.2.1](https://github.com/homecms/homecms/compare/server-v0.2.0...server-v0.2.1) (2022-11-16)
 
 
