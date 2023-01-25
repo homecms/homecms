@@ -1,6 +1,7 @@
 'use strict';
 
 const {assert} = require('chai');
+const {unsign: unsignCookie} = require('cookie-signature');
 const {browser, database, http} = require('../../helpers/suite');
 
 const ACCEPTABLE_DATE_DELTA = 5_000; // 5 seconds
@@ -157,12 +158,9 @@ describe('pages: /__admin/login', () => {
 			assert.strictEqual(user.email, 'admin@localhost');
 
 			assert.strictEqual(cookie.name, 'HomeCMS.session');
-			// TODO work out how to unsign the session secret
-			// console.log(decodeURIComponent(cookie.value));
-			// assert.strictEqual(unsignCookie(decodeURIComponent(cookie.value), 'mock-secret'), session.id);
+			const cookieValue = decodeURIComponent(cookie.value).replace(/^s:/, '');
+			assert.strictEqual(unsignCookie(cookieValue, 'mock-secret'), session.id);
 		});
-
-		it('actually checks the cookie'); // See TODO above
 
 	});
 
