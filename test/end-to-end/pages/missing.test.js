@@ -12,8 +12,8 @@ describe('pages: /missing', () => {
 	let response;
 
 	before(async () => {
-		response = await http.get('/missing');
 		page = await browser.browse('/missing');
+		response = await http.get('/missing');
 	});
 
 	after(async () => {

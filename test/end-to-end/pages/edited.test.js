@@ -12,8 +12,8 @@ describe('pages: /edited', () => {
 	let response;
 
 	before(async () => {
-		response = await http.get('/edited');
 		page = await browser.browse('/edited');
+		response = await http.get('/edited');
 	});
 
 	after(async () => {

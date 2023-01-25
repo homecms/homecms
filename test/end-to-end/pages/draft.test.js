@@ -12,8 +12,8 @@ describe('pages: /draft', () => {
 	let response;
 
 	before(async () => {
-		response = await http.get('/draft');
 		page = await browser.browse('/draft');
+		response = await http.get('/draft');
 	});
 
 	after(async () => {

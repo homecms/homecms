@@ -12,8 +12,8 @@ describe('pages: /unpublished', () => {
 	let response;
 
 	before(async () => {
-		response = await http.get('/unpublished');
 		page = await browser.browse('/unpublished');
+		response = await http.get('/unpublished');
 	});
 
 	after(async () => {

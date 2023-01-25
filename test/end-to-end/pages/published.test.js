@@ -12,8 +12,8 @@ describe('pages: /published', () => {
 	let response;
 
 	before(async () => {
-		response = await http.get('/published');
 		page = await browser.browse('/published');
+		response = await http.get('/published');
 	});
 
 	after(async () => {

@@ -32,3 +32,12 @@ exports.get = request.bind(null, 'GET');
  * @returns {Promise<Response>} - Returns the resolved HTTP response.
  */
 exports.post = request.bind(null, 'POST');
+
+/**
+ * @param {import('puppeteer').Page} page - The page to extract a cookie header from.
+ * @returns {Promise<string>} - Returns the page cookies as a string.
+ */
+exports.getCookiesFromPage = async function getCookiesFromPage(page) {
+	const cookies = await page.cookies();
+	return cookies.map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
+};

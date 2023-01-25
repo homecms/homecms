@@ -1,6 +1,7 @@
 'use strict';
 
 const {assert} = require('chai');
+const auth = require('../auth');
 const {suite} = require('../suite');
 
 /**
@@ -14,12 +15,17 @@ exports.resolveURL = function resolveURL(url) {
 
 /**
  * @param {string} url - The URL to open a browser with.
+ * @param {string} [loginEmail] - The email address of a user to log in as for the duration of the page.
  * @returns {Promise<import('puppeteer').Page>} - Returns the opened Puppeteer page.
  */
-exports.browse = async function browse(url) {
+exports.browse = async function browse(url, loginEmail) {
 	const {browser} = suite();
 	const context = await browser.createIncognitoBrowserContext();
 	const page = await context.newPage();
+	if (loginEmail) {
+		const token = await auth.createLoginTokenForEmail(loginEmail);
+		await page.goto(exports.resolveURL(`/__admin/login?token=${token}`));
+	}
 	await page.goto(exports.resolveURL(url));
 	return page;
 };
