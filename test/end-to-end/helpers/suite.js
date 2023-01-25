@@ -78,6 +78,7 @@ exports.stop = async function stop() {
 	}
 };
 
-exports.database = require('./database');
+exports.auth = require('./auth');
 exports.browser = require('./browser');
+exports.database = require('./database');
 exports.http = require('./http');

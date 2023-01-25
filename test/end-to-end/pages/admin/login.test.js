@@ -2,7 +2,7 @@
 
 const {assert} = require('chai');
 const {unsign: unsignCookie} = require('cookie-signature');
-const {browser, database, http} = require('../../helpers/suite');
+const {auth, browser, database, http} = require('../../helpers/suite');
 
 const ACCEPTABLE_DATE_DELTA = 5_000; // 5 seconds
 
@@ -66,7 +66,7 @@ describe('pages: /__admin/login', () => {
 	describe('when the login form is submitted with a valid email address', () => {
 
 		before(async () => {
-			await database.purgeLogins();
+			await auth.purgeLogins();
 			await page.type(SELECTORS.EMAIL_FIELD, 'admin@localhost');
 			const navigation = page.waitForNavigation();
 			await page.click(SELECTORS.SUBMIT_BUTTON);
@@ -102,7 +102,7 @@ describe('pages: /__admin/login', () => {
 	describe('when the login form is submitted with an invalid email address', () => {
 
 		before(async () => {
-			await database.purgeLogins();
+			await auth.purgeLogins();
 			await page.type(SELECTORS.EMAIL_FIELD, 'notauser@localhost');
 			const navigation = page.waitForNavigation();
 			await page.click(SELECTORS.SUBMIT_BUTTON);
@@ -130,8 +130,8 @@ describe('pages: /__admin/login', () => {
 	describe('when a valid login token is provided', () => {
 
 		before(async () => {
-			await database.purgeLogins();
-			const token = await database.createValidLoginTokenForEmail('admin@localhost');
+			await auth.purgeLogins();
+			const token = await auth.createLoginTokenForEmail('admin@localhost');
 			await page.goto(browser.resolveURL(`/__admin/login?token=${token}`));
 		});
 
@@ -167,7 +167,7 @@ describe('pages: /__admin/login', () => {
 	describe('when an invalid login token is provided', () => {
 
 		before(async () => {
-			await database.purgeLogins();
+			await auth.purgeLogins();
 			await page.goto(browser.resolveURL('/__admin/login?token=invalid-token'));
 		});
 

@@ -18,7 +18,8 @@ exports.resolveURL = function resolveURL(url) {
  */
 exports.browse = async function browse(url) {
 	const {browser} = suite();
-	const page = await browser.newPage();
+	const context = await browser.createIncognitoBrowserContext();
+	const page = await context.newPage();
 	await page.goto(exports.resolveURL(url));
 	return page;
 };
