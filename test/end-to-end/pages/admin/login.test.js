@@ -1,7 +1,16 @@
 'use strict';
 
 const {assert} = require('chai');
-const {browser, http} = require('../../helpers/suite');
+const {browser, database, http} = require('../../helpers/suite');
+
+const ACCEPTABLE_DATE_DELTA = 5_000; // 5 seconds
+
+const SELECTORS = {
+	LOGIN_FORM: '[data-testid=login-form]',
+	SUCCESS_ALERT: '[data-testid=login-form__success]',
+	EMAIL_FIELD: 'input[name=email]',
+	SUBMIT_BUTTON: 'button[type=submit]'
+};
 
 describe('pages: /__admin/login', () => {
 
@@ -11,9 +20,13 @@ describe('pages: /__admin/login', () => {
 	/** @type {Response} */
 	let response;
 
+	/** @type {import('knex').Knex} */
+	let db;
+
 	before(async () => {
 		response = await http.get('/__admin/login');
 		page = await browser.browse('/__admin/login');
+		db = database.knex();
 	});
 
 	after(async () => {
@@ -36,8 +49,8 @@ describe('pages: /__admin/login', () => {
 	});
 
 	it('has a login form', async () => {
-		const form = await page.$('[data-testid=login-form]');
-		const emailField = await form.$('input[name=email]');
+		const form = await page.$(SELECTORS.LOGIN_FORM);
+		const emailField = await form.$(SELECTORS.EMAIL_FIELD);
 
 		assert.strictEqual(await browser.getAttribute(form, 'action'), null);
 		assert.strictEqual(await browser.getAttribute(form, 'method'), 'post');
@@ -45,7 +58,115 @@ describe('pages: /__admin/login', () => {
 		assert.strictEqual(await browser.getAttribute(emailField, 'type'), 'email');
 	});
 
-	describe('when the login form is submitted', () => {
+	it('does not have a success alert', async () => {
+		assert.isNull(await page.$(SELECTORS.SUCCESS_ALERT));
+	});
+
+	describe('when the login form is submitted with a valid email address', () => {
+
+		before(async () => {
+			await database.purgeLogins();
+			await page.type(SELECTORS.EMAIL_FIELD, 'admin@localhost');
+			const navigation = page.waitForNavigation();
+			await page.click(SELECTORS.SUBMIT_BUTTON);
+			await navigation;
+		});
+
+		it('has a success alert message', async () => {
+			const alert = await page.$(SELECTORS.SUCCESS_ALERT);
+			assert.strictEqual(await browser.getAttribute(alert, 'role'), 'alert');
+			assert.include(await browser.getText(alert), 'admin@localhost');
+		});
+
+		it('creates a login token in the database pointing to the user who logged in', async () => {
+			const tokens = await db.select('*').from('userLoginTokens');
+			assert.lengthOf(tokens, 1);
+
+			const {userId, expired} = tokens[0];
+			const [user] = await db.select('*').from('users').where({id: userId});
+			assert.strictEqual(user.email, 'admin@localhost');
+
+			// Expiry should be 10 minutes in the future, give or take
+			const tenMinutesInTheFuture = Date.now() + (10 * 60 * 1_000);
+			assert.closeTo(expired.valueOf(), tenMinutesInTheFuture, ACCEPTABLE_DATE_DELTA);
+		});
+
+		it('does not create a session', async () => {
+			const sessions = await db.select('*').from('sessions');
+			assert.lengthOf(sessions, 0);
+		});
+
+	});
+
+	describe('when the login form is submitted with an invalid email address', () => {
+
+		before(async () => {
+			await database.purgeLogins();
+			await page.type(SELECTORS.EMAIL_FIELD, 'notauser@localhost');
+			const navigation = page.waitForNavigation();
+			await page.click(SELECTORS.SUBMIT_BUTTON);
+			await navigation;
+		});
+
+		it('has a success alert message', async () => {
+			const alert = await page.$(SELECTORS.SUCCESS_ALERT);
+			assert.strictEqual(await browser.getAttribute(alert, 'role'), 'alert');
+			assert.include(await browser.getText(alert), 'notauser@localhost');
+		});
+
+		it('does not create a login token', async () => {
+			const tokens = await db.select('*').from('userLoginTokens');
+			assert.lengthOf(tokens, 0);
+		});
+
+		it('does not create a session', async () => {
+			const sessions = await db.select('*').from('sessions');
+			assert.lengthOf(sessions, 0);
+		});
+
+	});
+
+	describe('when a valid login token is provided', () => {
+
+		before(async () => {
+			await database.purgeLogins();
+			const token = await database.createValidLoginTokenForEmail('admin@localhost');
+			await page.goto(browser.resolveURL(`/__admin/login?token=${token}`));
+		});
+
+		it('redirects to the admin dashboard', async () => {
+			assert.strictEqual(page.url(), browser.resolveURL('/__admin'));
+		});
+
+		it('deletes the login token', async () => {
+			const tokens = await db.select('*').from('userLoginTokens');
+			assert.lengthOf(tokens, 0);
+		});
+
+		it('creates a session and corresponding signed cookie', async () => {
+			const sessions = await db.select('*').from('sessions');
+			const cookies = await page.cookies();
+			assert.lengthOf(sessions, 1);
+			assert.lengthOf(cookies, 1);
+
+			const [session] = sessions;
+			const [cookie] = cookies;
+
+			assert.isString(session.sess.userId);
+			const [user] = await db.select('*').from('users').where({id: session.sess.userId});
+			assert.strictEqual(user.email, 'admin@localhost');
+
+			assert.strictEqual(cookie.name, 'HomeCMS.session');
+			// TODO work out how to unsign the session secret
+			// console.log(decodeURIComponent(cookie.value));
+			// assert.strictEqual(unsignCookie(decodeURIComponent(cookie.value), 'mock-secret'), session.id);
+		});
+
+		it('actually checks the cookie'); // See TODO above
+
+	});
+
+	describe('when an invalid login token is provided', () => {
 
 		it('has tests');
 

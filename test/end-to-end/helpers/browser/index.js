@@ -4,14 +4,22 @@ const {assert} = require('chai');
 const {suite} = require('../suite');
 
 /**
+ * @param {string} url - The URL to resolve.
+ * @returns {string} - Returns the URL resolved against the test suite base URL.
+ */
+exports.resolveURL = function resolveURL(url) {
+	const {baseURL} = suite();
+	return new URL(url, baseURL).toString();
+};
+
+/**
  * @param {string} url - The URL to open a browser with.
  * @returns {Promise<import('puppeteer').Page>} - Returns the opened Puppeteer page.
  */
 exports.browse = async function browse(url) {
-	const {baseURL, browser} = suite();
+	const {browser} = suite();
 	const page = await browser.newPage();
-	const pageUrl = new URL(url, baseURL);
-	await page.goto(pageUrl.toString());
+	await page.goto(exports.resolveURL(url));
 	return page;
 };
 

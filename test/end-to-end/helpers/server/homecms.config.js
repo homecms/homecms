@@ -10,6 +10,10 @@
  */
 module.exports = {
 	databaseURL: process.env.DATABASE_URL || 'postgresql://localhost/homecms-test',
+	logLevel: process.env.LOG_LEVEL || 'fatal',
 	port: process.env.PORT ? Number(process.env.PORT) : undefined,
-	logLevel: process.env.LOG_LEVEL || 'fatal'
+
+	// It's important that this stays the same - the cookies used in the tests
+	// rely on this being the encryption key
+	sessionSecret: 'mock-secret'
 };

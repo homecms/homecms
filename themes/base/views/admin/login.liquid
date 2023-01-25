@@ -12,7 +12,7 @@
 		<p>This is the Home CMS login page.</p>
 
 		{% if loginForm.success %}
-			<div>
+			<div role="alert" data-testid="login-form__success">
 				<p>
 					If "{{ loginForm.email }}" is a valid user email address,
 					we sent an email with a link to log in

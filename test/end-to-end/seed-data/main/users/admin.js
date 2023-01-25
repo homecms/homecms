@@ -18,13 +18,4 @@ exports.seed = async db => {
 		}
 	]);
 
-	// Insert an expired login token for the admin user
-	await db('userLoginTokens').insert([
-		{
-			id: uuid(),
-			userId,
-			expired: new Date(baseDate)
-		}
-	]);
-
 };
