@@ -1,43 +1,59 @@
 'use strict';
 
-const {test, expect} = require('@playwright/test');
+const {assert} = require('chai');
+const {browser, http} = require('../../helpers/suite');
 
-test.describe('pages: /__admin/login', () => {
-	const startUrl = '/__admin/login';
+describe('pages: /__admin/login', () => {
 
-	test.beforeEach(async ({page}) => {
-		await page.goto(startUrl);
+	/** @type {import('puppeteer').Page} */
+	let page;
+
+	/** @type {Response} */
+	let response;
+
+	before(async () => {
+		response = await http.get('/__admin/login');
+		page = await browser.browse('/__admin/login');
 	});
 
-	test('it responds with the expected HTTP status and headers', async ({request}) => {
-		const response = await request.get(startUrl);
-		expect(response.ok()).toBeTruthy();
-		expect(response.status()).toStrictEqual(200);
-		expect(response.headers()).toHaveProperty('content-type', 'text/html; charset=utf-8');
+	after(async () => {
+		await page.close();
 	});
 
-	test('has a title and expected content', async ({page}) => {
-		await expect(page).toHaveTitle('Login : Admin');
-
-		const main = page.getByRole('main');
-		const heading = main.getByRole('heading');
-		await expect(heading).toHaveText('Login');
+	it('responds with the expected HTTP status and headers', async () => {
+		assert.isTrue(response.ok);
+		assert.strictEqual(response.status, 200);
+		assert.strictEqual(response.headers.get('content-type'), 'text/html; charset=utf-8');
 	});
 
-	test('has a login form', async ({page}) => {
-		const form = page.getByTestId('login-form');
-		expect(await form.getAttribute('action')).toBeNull();
-		await expect(form).toHaveAttribute('method', 'post');
+	it('has a title and expected content', async () => {
+		const title = await page.$('html > head > title');
+		const main = await page.$('main');
+		const heading = await main.$('h1');
 
-		const emailField = form.getByLabel('email');
-		await expect(emailField).toHaveAttribute('type', 'email');
+		assert.strictEqual(await browser.getText(title), 'Login : Admin');
+		assert.strictEqual(await browser.getText(heading), 'Login');
 	});
 
-	test.describe('submitted login form', () => {
+	it('has a login form', async () => {
+		const form = await page.$('[data-testid=login-form]');
+		const emailField = await form.$('input[name=email]');
 
-		test('has tests', () => {
-			test.skip();
-		});
+		assert.strictEqual(await browser.getAttribute(form, 'action'), null);
+		assert.strictEqual(await browser.getAttribute(form, 'method'), 'post');
+
+		assert.strictEqual(await browser.getAttribute(emailField, 'type'), 'email');
+	});
+
+	describe('when the login form is submitted', () => {
+
+		it('has tests');
+
+	});
+
+	describe('when logged in', () => {
+
+		it('has tests');
 
 	});
 

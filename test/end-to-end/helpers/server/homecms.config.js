@@ -10,5 +10,6 @@
  */
 module.exports = {
 	databaseURL: process.env.DATABASE_URL || 'postgresql://localhost/homecms-test',
-	port: process.env.PORT ? Number(process.env.PORT) : 3456
+	port: process.env.PORT ? Number(process.env.PORT) : undefined,
+	logLevel: process.env.LOG_LEVEL || 'fatal'
 };

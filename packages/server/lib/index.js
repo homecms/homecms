@@ -240,6 +240,19 @@ exports.Server = class Server {
 	}
 
 	/**
+	 * Get the port that the server is running on.
+	 *
+	 * @returns {number} - Returns the server port.
+	 */
+	get port() {
+		const address = this.#httpServer.address();
+		if (address && typeof address !== 'string' && address.port) {
+			return address.port;
+		}
+		return this.#port;
+	}
+
+	/**
 	 * Get the environment the server is running in.
 	 *
 	 * @returns {string} - Returns the current environment.
@@ -294,8 +307,8 @@ exports.Server = class Server {
 		this.#log.info({
 			event: 'SERVER_STARTED',
 			message: 'Server is ready to accept connections',
-			baseURL: this.#baseURL,
-			environment: this.#environment
+			environment: this.#environment,
+			port: this.port
 		});
 	}
 

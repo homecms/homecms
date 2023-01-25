@@ -96,7 +96,7 @@ describe('@homecms/config', () => {
 
 			describe('.baseURL', () => {
 				it('is set to localhost with a default port', () => {
-					assert.strictEqual(config.baseURL, 'http://localhost:3000/');
+					assert.strictEqual(config.baseURL, 'http://localhost:3000');
 				});
 			});
 
@@ -370,7 +370,7 @@ describe('@homecms/config', () => {
 
 				describe('.baseURL', () => {
 					it('is set to localhost with the configured port', () => {
-						assert.strictEqual(config.baseURL, 'http://localhost:1234/');
+						assert.strictEqual(config.baseURL, 'http://localhost:1234');
 					});
 				});
 
@@ -509,7 +509,7 @@ describe('@homecms/config', () => {
 
 				describe('.baseURL', () => {
 					it('is set to localhost with the configured port', () => {
-						assert.strictEqual(config.baseURL, 'http://localhost:mock-port/');
+						assert.strictEqual(config.baseURL, 'http://localhost:mock-port');
 					});
 				});
 

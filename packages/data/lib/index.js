@@ -182,7 +182,7 @@ exports.DataStore = class DataStore {
 	 */
 	async addSeedData(name) {
 		await this.knex.seed.run({
-			directory: path.join(SEED_DATA_DIRECTORY, name),
+			directory: path.resolve(SEED_DATA_DIRECTORY, name),
 			...this.#baseSeedDataConfig
 		});
 		this.log.info(`Seed data ${name} created`);

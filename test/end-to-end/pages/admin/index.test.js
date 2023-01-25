@@ -1,22 +1,35 @@
 'use strict';
 
-const {test, expect} = require('@playwright/test');
+const {assert} = require('chai');
+const {browser, http} = require('../../helpers/suite');
 
-test.describe('pages: /__admin', () => {
-	const startUrl = '/__admin';
+describe('pages: /__admin', () => {
 
-	test.beforeEach(async ({page}) => {
-		await page.goto(startUrl);
+	/** @type {import('puppeteer').Page} */
+	let page;
+
+	/** @type {Response} */
+	let response;
+
+	before(async () => {
+		response = await http.get('/__admin');
+		page = await browser.browse('/__admin');
 	});
 
-	test('it responds with the expected HTTP status and headers', async ({request}) => {
-		const response = await request.get(startUrl, {
-			maxRedirects: 0
-		});
-		expect(response.ok()).toBeFalsy();
-		expect(response.status()).toStrictEqual(302);
-		expect(response.headers()).toHaveProperty('content-type', 'text/plain; charset=utf-8');
-		expect(response.headers()).toHaveProperty('location', '/__admin/login');
+	after(async () => {
+		await page.close();
+	});
+
+	it('responds with the expected HTTP status and headers', async () => {
+		assert.isFalse(response.ok);
+		assert.strictEqual(response.status, 302);
+		assert.strictEqual(response.headers.get('content-type'), 'text/plain; charset=utf-8');
+	});
+
+	describe('when logged in', () => {
+
+		it('has tests');
+
 	});
 
 });

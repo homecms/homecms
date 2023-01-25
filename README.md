@@ -16,7 +16,7 @@ If you want to use Home CMS to build a website we provide some technical documen
 
 ## Contributing
 
-If you want contribute to Home CMS, whether that's working on the core or publishing your own themes, the guides you need are here. Before you start, review the [contributing guide](docs/contributing.md) and the [code of conduct](docs/code_of_conduct.md).
+If you want to contribute to Home CMS, whether that's working on the core or publishing your own themes, the guides you need are here. Before you start, review the [contributing guide](docs/contributing.md) and the [code of conduct](docs/code_of_conduct.md).
 
   * **[🏗 Local development guide](docs/contributing/local-development.md):** explains how to get set up for contributing to Home CMS
 

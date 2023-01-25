@@ -63,7 +63,7 @@ npm run verify:eslint
 
 ## TypeScript
 
-Although this project is written in JavaScript, it is checked with [TypeScript](https://www.typescriptlang.org/) to ensure type-safety. We also document all types with JSDoc so you should get type hints if your editor supports these.
+Although this project is written in JavaScript, it is checked with [TypeScript](https://www.typescriptlang.org/) to ensure type safety. We also document all types with JSDoc so you should get type hints if your editor supports these.
 
 Type errors will fail the build on any PRs. Most editors have a TypeScript plugin which will pick up errors, but you can also check types manually with the following command:
 
@@ -91,7 +91,7 @@ npm run test:coverage
 
 ## End-to-end tests
 
-This project has end to end tests which use [Playwright](https://playwright.dev/), and these tests can fail the build on PRs. If you add or remove features, please update the tests to match.
+This project has end-to-end tests which use a custom setup with [Puppeteer](https://pptr.dev/), and these tests can fail the build on PRs. If you add or remove features, please update the tests to match.
 
 You can run end-to-end tests manually with the following command:
 
@@ -99,9 +99,8 @@ You can run end-to-end tests manually with the following command:
 npm run test:end-to-end
 ```
 
-If you need to run Playwright in debug mode, you can do so with:
+If you need to see full server logs during the tests (e.g. to check that your tests are actually loading pages and performing database operations), you can do by setting the log level, e.g:
 
 ```
-npm run test:end-to-end -- --debug
+LOG_LEVEL=debug npm run test:end-to-end
 ```
-
