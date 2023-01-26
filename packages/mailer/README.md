@@ -1,7 +1,7 @@
 
 # @homecms/mailer
 
-A library for sending system emails from Home CMS. [The documentation is available in the central repository](https://github.com/homecms/homecms).
+A library for sending system emails for Home CMS. [The documentation is available in the central repository](https://github.com/homecms/homecms).
 
 ## License
 

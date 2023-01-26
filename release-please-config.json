@@ -33,6 +33,7 @@
 		"packages/config": {},
 		"packages/data": {},
 		"packages/logger": {},
+		"packages/mailer": {},
 		"packages/server": {},
 		"packages/themer": {},
 		"themes/base": {},
