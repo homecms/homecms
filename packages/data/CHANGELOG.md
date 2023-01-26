@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/homecms/homecms/compare/data-v0.1.2...data-v0.1.3) (2023-01-26)
+
+
+### Bug Fixes
+
+* bump knex from 2.3.0 to 2.4.0 ([a44e1b3](https://github.com/homecms/homecms/commit/a44e1b3833d1fc80a5b3671e57b365ea765fda44))
+
 ## [0.1.2](https://github.com/homecms/homecms/compare/data-v0.1.1...data-v0.1.2) (2023-01-25)
 
 
