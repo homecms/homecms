@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.3](https://github.com/homecms/homecms/compare/server-v0.2.2...server-v0.2.3) (2023-01-26)
+
+
+### Bug Fixes
+
+* bump @rowanmanning/not-found from 3.1.2 to 3.1.3 ([feae685](https://github.com/homecms/homecms/commit/feae685ec8283a5b25b4b0f5c8f9069e29335e8e))
+* bump @rowanmanning/render-error-page from 4.1.0 to 4.1.2 ([993b43b](https://github.com/homecms/homecms/commit/993b43b85a2b2f817d1df4e0128ceb254de96236))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/data bumped from ^0.1.2 to ^0.1.3
+
 ## [0.2.2](https://github.com/homecms/homecms/compare/server-v0.2.1...server-v0.2.2) (2023-01-25)
 
 

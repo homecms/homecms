@@ -15,6 +15,13 @@
     * @homecms/data bumped from ^0.1.1 to ^0.1.2
     * @homecms/server bumped from ^0.2.1 to ^0.2.2
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/data bumped from ^0.1.2 to ^0.1.3
+    * @homecms/server bumped from ^0.2.2 to ^0.2.3
+
 ## [0.2.0](https://github.com/homecms/homecms/compare/homecms-v0.1.1...homecms-v0.2.0) (2022-11-16)
 
 
