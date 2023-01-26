@@ -1,5 +1,11 @@
 # Changelog
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/mailer bumped from ^0.0.0 to ^0.1.0
+
 ## [0.2.3](https://github.com/homecms/homecms/compare/server-v0.2.2...server-v0.2.3) (2023-01-26)
 
 
