@@ -1,5 +1,6 @@
 'use strict';
 
+const {mountDashboardRoutes} = require('./dashboard');
 const {mountLoginRoutes} = require('./login');
 const {Router: createRouter} = require('express');
 
@@ -41,10 +42,8 @@ exports.getAdminRouter = function getAdminRouter(server) {
 		next();
 	});
 
-	// Render the admin dashboard
-	router.get('/', (request, response) => {
-		response.render('admin/dashboard');
-	});
+	// Dashboard
+	mountDashboardRoutes(router, server);
 
 	return router;
 };

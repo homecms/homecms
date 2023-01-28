@@ -62,7 +62,7 @@ exports.UserModel = class UserModel extends Model {
 	 * @returns {Promise<null | Object<string, any>>} - Resolves with the user.
 	 */
 	async findOneByEmail(email) {
-		return await this.findOne({email});
+		return await this.findOne().where({email});
 	}
 
 	/**
@@ -76,7 +76,7 @@ exports.UserModel = class UserModel extends Model {
 			.where({id: tokenId})
 			.andWhere('expired', '>', new Date());
 		if (token) {
-			return await this.findOne({id: token.userId});
+			return await this.findOne().where({id: token.userId});
 		}
 		return null;
 	}

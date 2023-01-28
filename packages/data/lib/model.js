@@ -107,13 +107,21 @@ exports.Model = class Model {
 	}
 
 	/**
-	 * Find a single document.
+	 * Find many documents.
 	 *
-	 * @param {ModelDocument} query - The query to use to find the document.
 	 * @returns {import('knex').Knex.QueryBuilder} - Returns the partial query builder.
 	 */
-	findOne(query) {
-		return this.dataStore.knex(this.tableName).first('*').where(query);
+	findMany() {
+		return this.dataStore.knex(this.tableName);
+	}
+
+	/**
+	 * Find a single document.
+	 *
+	 * @returns {import('knex').Knex.QueryBuilder} - Returns the partial query builder.
+	 */
+	findOne() {
+		return this.dataStore.knex(this.tableName).first('*');
 	}
 
 };

@@ -74,13 +74,43 @@ exports.PageModel = class PageModel extends Model {
 	}
 
 	/**
+	 * Find many pages.
+	 *
+	 * @override
+	 * @param {boolean} [includeContent] - Whether to include basic content information.
+	 * @returns {import('knex').Knex.QueryBuilder} - Returns the partial query builder.
+	 */
+	findMany(includeContent = true) {
+		if (!includeContent) {
+			return super.findMany();
+		}
+		const {knex, models} = this.dataStore;
+		const {tableName} = this;
+		const tmpTableName = 'liveContent';
+
+		return knex
+			.select(
+				`${tableName}.*`,
+				`${tmpTableName}.title`,
+				`${tmpTableName}.raw`,
+				`${tmpTableName}.status`
+			)
+			.distinctOn(`${tmpTableName}.pageId`)
+			.from(tableName)
+			.innerJoin(
+				models.content.createLiveContentSubquery().as(tmpTableName),
+				`${tableName}.id`, '=', `${tmpTableName}.pageId`
+			);
+	}
+
+	/**
 	 * Find a single page by path.
 	 *
 	 * @param {string} path - The path to find page for.
 	 * @returns {Promise<null | Object<string, any>>} - Returns the page.
 	 */
 	async findOneByPath(path) {
-		return await this.findOne({path});
+		return await this.findOne().where({path});
 	}
 
 };

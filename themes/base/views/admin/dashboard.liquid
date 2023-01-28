@@ -10,6 +10,13 @@
 	<main>
 		<h1>Dashboard</h1>
 		<p>This is the Home CMS admin dashboard.</p>
+		<ul>
+			{% for page in pages %}
+				<li>
+					{{ page.title }} ({{ page.path }} - {{ page.status }})
+				</li>
+			{% endfor %}
+		</ul>
 	</main>
 
 {% endblock %}
