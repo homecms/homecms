@@ -2,6 +2,7 @@
 
 const {mountDashboardRoutes} = require('./dashboard');
 const {mountLoginRoutes} = require('./login');
+const {mountPageRoutes} = require('./pages');
 const {Router: createRouter} = require('express');
 
 /**
@@ -44,6 +45,7 @@ exports.getAdminRouter = function getAdminRouter(server) {
 
 	// Dashboard
 	mountDashboardRoutes(router, server);
+	mountPageRoutes(router, server);
 
 	return router;
 };

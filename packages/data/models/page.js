@@ -115,10 +115,10 @@ exports.PageModel = class PageModel extends Model {
 	 * Find a single page by path.
 	 *
 	 * @param {string} path - The path to find page for.
-	 * @returns {Promise<null | Object<string, any>>} - Returns the page.
+	 * @returns {import('knex').Knex.QueryBuilder} - Returns a partial query requesting the page.
 	 */
-	async findOneByPath(path) {
-		return await this.findOne().where({path});
+	findOneByPath(path) {
+		return this.findOne().where({path});
 	}
 
 };

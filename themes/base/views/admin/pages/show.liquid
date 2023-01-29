@@ -1,0 +1,26 @@
+
+{% layout 'admin/layouts/default' %}
+
+{% block title -%}
+	Editing {{ latestContent.title }}
+{%- endblock %}
+
+{% block content %}
+
+	<main>
+		<h1>Editing {{ latestContent.title }}</h1>
+		<dl>
+			<dt>Path</dt>
+			<dd>{{ page.path }}</dd>
+			<dt>Type</dt>
+			<dd>{{ page.type }}</dd>
+			<dt>Status</dt>
+			<dd>{{ latestContent.status }}</dd>
+			<dt>Title</dt>
+			<dd>{{ latestContent.title }}</dd>
+			<dt>Content</dt>
+			<dd>{{ latestContent.raw | escape }}</dd>
+		</dl>
+	</main>
+
+{% endblock %}

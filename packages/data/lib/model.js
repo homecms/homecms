@@ -124,4 +124,14 @@ exports.Model = class Model {
 		return this.dataStore.knex(this.tableName).first('*');
 	}
 
+	/**
+	 * Find a single document by ID.
+	 *
+	 * @param {string} id - The ID of the document.
+	 * @returns {import('knex').Knex.QueryBuilder} - Returns the partial query builder.
+	 */
+	findOneById(id) {
+		return this.findOne().where({id});
+	}
+
 };

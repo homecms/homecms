@@ -1,6 +1,6 @@
 
 <div data-test-id="page-summary">
-	<h2 data-test-id="page-summary__title">{{ page.title }}</h2>
+	<h2 data-test-id="page-summary__title"><a href="/__admin/pages/{{ page.id }}">{{ page.title }}</a></h2>
 	<p>
 		(<span data-test-id="page-summary__path">{{ page.path }}</span> -
 		<span data-test-id="page-summary__status">{{ page.status }}</span>)

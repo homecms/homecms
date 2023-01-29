@@ -63,12 +63,22 @@ exports.ContentModel = class ContentModel extends Model {
 	 * Find the live piece of content for a page.
 	 *
 	 * @param {string} pageId - The page ID to find content for.
-	 * @returns {Promise<null | Object<string, any>>} - Returns the page.
+	 * @returns {import('knex').Knex.QueryBuilder} - Returns a partial query requesting the content.
 	 */
-	async findLiveContentForPage(pageId) {
-		return await this.findOne()
+	findLiveContentForPage(pageId) {
+		return this.findLatestContentForPage(pageId)
+			.where('status', 'in', ['unpublished', 'published']);
+	}
+
+	/**
+	 * Find the latest piece of content for a page.
+	 *
+	 * @param {string} pageId - The page ID to find content for.
+	 * @returns {import('knex').Knex.QueryBuilder} - Returns a partial query requesting the content.
+	 */
+	findLatestContentForPage(pageId) {
+		return this.findOne()
 			.where({pageId})
-			.where('status', 'in', ['unpublished', 'published'])
 			.orderBy('dateCreated', 'desc');
 	}
 
