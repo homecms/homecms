@@ -187,6 +187,14 @@ describe('pages: /__admin/login', () => {
 
 		});
 
+		describe('when an expired login token is provided', () => {
+
+			it('does not redirect');
+
+			it('does not create a session');
+
+		});
+
 	});
 
 	describe('authenticated', () => {
