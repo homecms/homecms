@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.4](https://github.com/homecms/homecms/compare/data-v0.1.3...data-v0.1.4) (2023-01-29)
+
+
+### Features
+
+* add a list of pages to the admin dashboard ([f7c75e0](https://github.com/homecms/homecms/commit/f7c75e0f9c9e2676f6aab22ff6543d728814933f))
+* add the start of page administration ([3d1b278](https://github.com/homecms/homecms/commit/3d1b278b9200560a5ca6894d30a3b2595656eadf))
+
+
+### Bug Fixes
+
+* bump ajv from 8.11.2 to 8.12.0 ([75df1bb](https://github.com/homecms/homecms/commit/75df1bb21a0c9394c58d8ec0f2b013b6a9f40461))
+* correct the dashboard page list and add tests ([82bca11](https://github.com/homecms/homecms/commit/82bca117c407c92ae993fcc1dcfc5453951f85fe))
+
 ## [0.1.3](https://github.com/homecms/homecms/compare/data-v0.1.2...data-v0.1.3) (2023-01-26)
 
 

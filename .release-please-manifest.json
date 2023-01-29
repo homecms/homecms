@@ -1,11 +1,11 @@
 {
-  "packages/cli": "0.2.4",
+  "packages/cli": "0.2.5",
   "packages/config": "0.2.2",
-  "packages/data": "0.1.3",
+  "packages/data": "0.1.4",
   "packages/logger": "0.1.1",
   "packages/mailer": "0.1.0",
-  "packages/server": "0.2.4",
+  "packages/server": "0.2.5",
   "packages/themer": "0.1.1",
-  "themes/base": "0.1.1",
+  "themes/base": "0.1.2",
   "themes/limelight": "0.1.0"
 }
