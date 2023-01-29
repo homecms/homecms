@@ -27,7 +27,7 @@ exports.Model = class Model {
 	dataStore;
 
 	/**
-	 * @protected
+	 * @public
 	 * @readonly
 	 * @type {string}
 	 */

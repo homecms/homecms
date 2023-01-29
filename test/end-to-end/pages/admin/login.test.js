@@ -7,8 +7,8 @@ const {auth, browser, database, http} = require('../../helpers/suite');
 const ACCEPTABLE_DATE_DELTA = 5_000; // 5 seconds
 
 const SELECTORS = {
-	LOGIN_FORM: '[data-testid=login-form]',
-	SUCCESS_ALERT: '[data-testid=login-form__success]',
+	LOGIN_FORM: '[data-test-id=login-form]',
+	SUCCESS_ALERT: '[data-test-id=login-form__success]',
 	EMAIL_FIELD: 'input[name=email]',
 	SUBMIT_BUTTON: 'button[type=submit]'
 };

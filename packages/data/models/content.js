@@ -60,33 +60,15 @@ exports.ContentModel = class ContentModel extends Model {
 	}
 
 	/**
-	 * Create a query that can be used in a subquery to get the latest content.
-	 *
-	 * @returns {import('knex').Knex.QueryBuilder} - Returns the partial query builder.
-	 */
-	createLiveContentSubquery() {
-		return ContentModel.addLiveContentConditions(this.dataStore.knex(this.tableName));
-	}
-
-	/**
 	 * Find the live piece of content for a page.
 	 *
 	 * @param {string} pageId - The page ID to find content for.
 	 * @returns {Promise<null | Object<string, any>>} - Returns the page.
 	 */
 	async findLiveContentForPage(pageId) {
-		return await ContentModel.addLiveContentConditions(this.findOne().where({pageId}));
-	}
-
-	/**
-	 * Add conditions to a query to ensure that the latest live content is fetched.
-	 *
-	 * @param {import('knex').Knex.QueryBuilder} queryBuilder - A partial query builder.
-	 * @returns {import('knex').Knex.QueryBuilder} - Returns the amended query.
-	 */
-	static addLiveContentConditions(queryBuilder) {
-		return queryBuilder
-			.where('status', 'in', ['published', 'unpublished'])
+		return await this.findOne()
+			.where({pageId})
+			.where('status', 'in', ['unpublished', 'published'])
 			.orderBy('dateCreated', 'desc');
 	}
 

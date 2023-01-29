@@ -13,7 +13,7 @@
 		<ul>
 			{% for page in pages %}
 				<li>
-					{{ page.title }} ({{ page.path }} - {{ page.status }})
+					{% render 'admin/partials/page-summary' with page as page %}
 				</li>
 			{% endfor %}
 		</ul>

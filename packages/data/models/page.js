@@ -86,19 +86,27 @@ exports.PageModel = class PageModel extends Model {
 		}
 		const {knex, models} = this.dataStore;
 		const {tableName} = this;
+		const joinTableName = models.content.tableName;
 		const tmpTableName = 'liveContent';
 
-		return knex
-			.select(
-				`${tableName}.*`,
-				`${tmpTableName}.title`,
-				`${tmpTableName}.raw`,
-				`${tmpTableName}.status`
-			)
-			.distinctOn(`${tmpTableName}.pageId`)
+		return knex.select(
+			`${tableName}.*`,
+			`${tmpTableName}.title`,
+			`${tmpTableName}.raw`,
+			`${tmpTableName}.status`
+		)
 			.from(tableName)
 			.innerJoin(
-				models.content.createLiveContentSubquery().as(tmpTableName),
+				knex.select('*').from(joinTableName)
+					.distinctOn('pageId')
+					.orderBy([
+						'pageId',
+						{
+							column: 'dateCreated',
+							order: 'desc'
+						}
+					])
+					.as(tmpTableName),
 				`${tableName}.id`, '=', `${tmpTableName}.pageId`
 			);
 	}

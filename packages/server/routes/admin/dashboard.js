@@ -13,7 +13,8 @@ exports.mountDashboardRoutes = function mountDashboardRoutes(adminRouter, server
 	adminRouter.get('/', async (request, response, next) => {
 		try {
 			const pages = await models.page.findMany()
-				.where('status', '!=', 'unpublished');
+				.where('status', '!=', 'unpublished')
+				.orderBy('title');
 			response.render('admin/dashboard', {
 				pages
 			});
