@@ -6,6 +6,27 @@
   * dependencies
     * @homecms/mailer bumped from ^0.0.0 to ^0.1.0
 
+## [0.2.5](https://github.com/homecms/homecms/compare/server-v0.2.4...server-v0.2.5) (2023-01-29)
+
+
+### Features
+
+* add a list of pages to the admin dashboard ([f7c75e0](https://github.com/homecms/homecms/commit/f7c75e0f9c9e2676f6aab22ff6543d728814933f))
+* add the start of page administration ([3d1b278](https://github.com/homecms/homecms/commit/3d1b278b9200560a5ca6894d30a3b2595656eadf))
+
+
+### Bug Fixes
+
+* correct the dashboard page list and add tests ([82bca11](https://github.com/homecms/homecms/commit/82bca117c407c92ae993fcc1dcfc5453951f85fe))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @homecms/data bumped from ^0.1.3 to ^0.1.4
+    * @homecms/theme-base bumped from ^0.1.1 to ^0.1.2
+
 ## [0.2.3](https://github.com/homecms/homecms/compare/server-v0.2.2...server-v0.2.3) (2023-01-26)
 
 
