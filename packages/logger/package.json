@@ -15,7 +15,7 @@
   },
   "main": "lib",
   "dependencies": {
-    "pino": "^8.7.0",
+    "pino": "^8.11.0",
     "pino-pretty": "^9.1.1"
   }
 }
